@@ -1,0 +1,32 @@
+@media (min-width: 800px) {
+    .login-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        grid-template-rows: 100px 1fr 1fr;
+
+        padding: 1%;
+    }
+
+    h1 {
+        align-self: center;
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .login {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .information {
+        grid-column: 1 / 2;
+        grid-row: 2 / 4;
+    }
+
+    .statistics {
+        grid-column: 2 / 3;
+        grid-row: 3 / 4;
+    }
+}
