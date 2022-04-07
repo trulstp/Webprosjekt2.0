@@ -6,7 +6,7 @@ class LogIn extends Component {
     constructor() {
         super();
         this.state = {
-            email: "",
+            username: "",
             password: "",
         };
         this.changeEmail = this.changeEmail.bind(this);
@@ -15,7 +15,7 @@ class LogIn extends Component {
 
     changeEmail(event) {
         this.setState({
-            email: event.target.value,
+            username: event.target.value,
         });
     }
 
@@ -34,7 +34,7 @@ class LogIn extends Component {
                     <h2>Log in</h2>
                     <form onSubmit={this.onSubmit}>
                         <label htmlFor="input-email">Email</label>
-                        <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.email} className="input-field" />
+                        <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.username} className="input-field" />
 
                         <label htmlFor="input-password">Password</label>
                         <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} className="input-field" />
