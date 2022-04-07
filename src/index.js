@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-//import App from "./App";
-import LogIn from "./LogIn";
+import Navigation from "./Navigation";
+//import LogIn from "./LogIn";
+//import Template from "./Template";
 
-ReactDOM.render(<LogIn />, document.getElementById("root"));
+ReactDOM.render(<Navigation />, document.getElementById("root"));
