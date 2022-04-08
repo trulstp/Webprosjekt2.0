@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./styles/style.css";
 import "./styles/media.css";
+import "./styles/all-requests.css";
+import SearchIcon from "./icons/search.png";
 
 class AllRequests extends Component {
     render() {
@@ -13,8 +15,12 @@ class AllRequests extends Component {
                     <h1>Available requests</h1>
                     <form>
                         <label htmlFor="search-tag">Search by tag: </label>
-                        <input type="text" id="search-tag" className="input-field" />
-                        <input type="submit" className="btn-submit" value="Search" />
+                        <div className="search-bar">
+                            <input type="text" id="search-tag" className="input-field" />
+                            <button type="submit" className="btn-search">
+                                <img src={SearchIcon} alt="Search" />
+                            </button>
+                        </div>
                     </form>
                 </main>
             </div>
