@@ -1,0 +1,9 @@
+@media (min-width: 800px) {
+    #request-description {
+        min-height: 200px;
+    }
+    .btn-submit {
+        max-width: 200px;
+        justify-self: end;
+    }
+}
