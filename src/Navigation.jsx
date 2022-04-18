@@ -1,9 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Template from "./Template";
+//import Template from "./Template";
 import AllRequests from "./AllRequests";
 import NewRequest from "./NewRequest";
+import Profile from "./Profile";
 
+import ViewRequest from "./ViewRequest";
+
+import ListIcon from "./icons/list.png";
 import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
 
@@ -13,7 +17,7 @@ const Navigation = () => {
             <nav className="menu">
                 <div>
                     <Link to="/" className="link">
-                        <img src={ProfileIcon} alt="List of requests" />
+                        <img src={ListIcon} alt="List of requests" />
                         List of requests
                     </Link>
                 </div>
@@ -31,14 +35,23 @@ const Navigation = () => {
                         New request
                     </Link>
                 </div>
+
+                <div>
+                    <Link to="/view-request" className="link">
+                        <img src={RequestIcon} alt="New request" />
+                        View request
+                    </Link>
+                </div>
             </nav>
 
             <Routes>
                 <Route path="/" element={<AllRequests />} exact />
 
-                <Route path="/my-profile" element={<Template />} />
+                <Route path="/my-profile" element={<Profile />} />
 
                 <Route path="/new-request" element={<NewRequest />} />
+
+                <Route path="/view-request" element={<ViewRequest />} />
             </Routes>
         </Router>
     );
