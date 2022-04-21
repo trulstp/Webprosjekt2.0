@@ -10,6 +10,7 @@ import ViewRequest from "./ViewRequest";
 import ListIcon from "./icons/list.png";
 import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
+import EditProfile from "./EditProfile";
 
 const Navigation = () => {
     return (
@@ -26,6 +27,13 @@ const Navigation = () => {
                     <Link to="/my-profile" className="link">
                         <img src={ProfileIcon} alt="My profile" />
                         My profile
+                    </Link>
+                </div>
+
+                <div>
+                    <Link to="/edit-profile" className="link">
+                        <img src={ProfileIcon} alt="Edit profile" />
+                        Edit profile
                     </Link>
                 </div>
 
@@ -48,6 +56,8 @@ const Navigation = () => {
                 <Route path="/" element={<AllRequests />} exact />
 
                 <Route path="/my-profile" element={<Profile />} />
+
+                <Route path="/edit-profile" element={<EditProfile />} />
 
                 <Route path="/new-request" element={<NewRequest />} />
 
