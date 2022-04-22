@@ -3,19 +3,47 @@ const jwt = require('jsonwebtoken')
 const {check,validationResult} = require('express-validator')
 const bcrypt = require('bcrypt')
 
-const register = async (request, response) =>{
-    const newPass = await bcrypt.hash(request.body.password, 10)
+    //handle errors
+    const handleErrors = (err) => {
+    console.log(err.message, err.code);
+    let errors = { email: '', password: '' };
+
+    //duplicate error code
+    if(err.code === 11000) {
+        errors.email = 'that email is already registered';
+        return errors;
+    }
+
+    // validation errors
+    if (err.message.includes('mytable validation failed')) {
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message;
+        });
+    }
+    return errors;
+}
+    const maxAge = 3 * 24 * 60 *60;
+    const createToken = (id) => {
+        return jwt.sign({ id }, 'secret123', {
+            expiresIn: maxAge
+        })
+    }
+
+const register = async (req, res) =>{
     const registeredUser = new loginSchema({
-    userName:request.body.userName,
-    email:request.body.email,
-    password: newPass
+    name:req.body.name,
+    email:req.body.email,
+    university:req.body.university,
+    phonenr:req.body.phonenr,
+    password:req.body.password
     })    
     registeredUser.save()
     .then(data =>{
-        response.json(data)
+        res.json(data)
     })
-    .catch(error =>{
-        response.json(error)
+    .catch(err =>{ 
+        const errors = handleErrors(err);
+        res.status(400).json({ errors })
     })
 }
 
@@ -28,11 +56,9 @@ const login = async (req, res) => {
     }
         const isPassValid = await bcrypt.compare(req.body.password, user.password)
         if(isPassValid){
-            const token = jwt.sign({
-                userName:req.body.userName,
-                mail:req.body.email
-            }, 'secret123')
-            return res.json({ status: 'ok', user: token})
+            const token = createToken(user._id); 
+            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+            res.status(201).json({ status: 'ok', user: user._id})
         } else {
             return res.json({ status: 'error', user: false})
         }
