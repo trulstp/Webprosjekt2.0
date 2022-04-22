@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./styles/signup.css";
 import "./styles/signup-media.css";
+import axios from 'axios'
 
 class SignUp extends Component {
     constructor() {
@@ -10,7 +11,7 @@ class SignUp extends Component {
             email: "",
             phonenr: "",
             university: "",
-            password: "",
+            password: ""
         };
         this.changeName = this.changeName.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
@@ -49,6 +50,33 @@ class SignUp extends Component {
         });
     }
 
+    onSubmit(event) {
+        event.preventDefault()
+        try {
+        const registered = {
+            name: this.state.name,
+            email: this.state.email,
+            phonenr: this.state.phonenr,
+            university: this.state.university,
+            password: this.state.password
+        }
+
+        axios.post('localhost:5000/app/register', registered)
+        .then(response => console.log(response.data))
+
+        this.setState({
+            name: "",
+            email: "",
+            phonenr: "",
+            university: "",
+            password: ""
+        })
+    } catch(err){
+        console.log(err)
+    }
+
+    }
+
     render() {
         return (
             <div className="signup-wrapper">
@@ -79,5 +107,7 @@ class SignUp extends Component {
         );
     }
 }
+
+
 
 export default SignUp;

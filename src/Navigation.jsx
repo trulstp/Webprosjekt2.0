@@ -4,13 +4,15 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import AllRequests from "./AllRequests";
 import NewRequest from "./NewRequest";
 import Profile from "./Profile";
-
+import SignUp from "./SignUp";
 import ViewRequest from "./ViewRequest";
-
+import LogIn from "./LogIn";
 import ListIcon from "./icons/list.png";
 import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
 import EditProfile from "./EditProfile";
+
+
 
 const Navigation = () => {
     return (
@@ -56,6 +58,10 @@ const Navigation = () => {
                 <Route path="/" element={<AllRequests />} exact />
 
                 <Route path="/my-profile" element={<Profile />} />
+
+                <Route path="/signUp" element={<SignUp />} />
+
+                <Route path="/login" element={<LogIn />} />
 
                 <Route path="/edit-profile" element={<EditProfile />} />
 
