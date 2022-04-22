@@ -4,9 +4,9 @@ const router = express.Router()
 const {register, getAll} = require('../controllers/adminController')
 
 
-router.post('/register', register)
+router.post('/', register)
 
-router.get('/list', getAll)
+router.get('/', getAll)
 
 
 module.exports = router
