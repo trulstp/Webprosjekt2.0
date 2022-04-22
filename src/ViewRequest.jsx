@@ -17,12 +17,21 @@ class ViewRequest extends Component {
                             <span className="bold">Author:</span> Name Lastname
                         </p>
                         <p>Posted: 18.04.2022</p>
+                        <p>Application deadline: 24.04.2022</p>
                         <p>Exam period: 21.05.2022 - 22.05.2022</p>
                         <ul>
                             <li>Tag 1</li>
                             <li>Tag 2</li>
                         </ul>
                     </div>
+
+                    <h2>Details</h2>
+                    <p>
+                        <span className="bold">Minimum education for examiner:</span> Master
+                    </p>
+                    <p>
+                        <span className="bold">Level of examination:</span> Bachelor
+                    </p>
 
                     <h2>Description</h2>
                     <p>

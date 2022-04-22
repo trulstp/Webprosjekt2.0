@@ -1,9 +1,16 @@
-form {
+form,
+.request-exam-period,
+.request-exam-period div {
     display: grid;
 }
 
 #request-title,
+#request-deadline,
+#request-exam-start,
+#request-exam-end,
 #request-tag,
+#request-examiner,
+#request-examination,
 #request-description {
     margin: 5px 0 20px;
     border: 1px solid rgb(39, 39, 39);
@@ -11,8 +18,13 @@ form {
 }
 
 #request-title,
+#request-deadline,
+#request-exam-start,
+#request-exam-end,
+#request-examiner,
+#request-examination,
 #request-description {
-    padding: 10px 5px;
+    padding: 8px;
     font-size: 1rem;
 }
 

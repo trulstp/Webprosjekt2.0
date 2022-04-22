@@ -7,3 +7,10 @@
         justify-self: end;
     }
 }
+
+@media (min-width: 900px) {
+    .request-exam-period {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px;
+    }
+}

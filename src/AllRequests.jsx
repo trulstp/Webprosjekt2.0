@@ -34,7 +34,7 @@ class AllRequests extends Component {
                         <section className="request">
                             <div className="request-details">
                                 <h2>Request name</h2>
-                                <p>Posted: 18.04.2022</p>
+                                <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
                                 <ul>
                                     <li>Tag 1</li>
@@ -51,7 +51,7 @@ class AllRequests extends Component {
                         <section className="request">
                             <div className="request-details">
                                 <h2>Request name</h2>
-                                <p>Posted: 18.04.2022</p>
+                                <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
                                 <ul>
                                     <li>Tag 1</li>
@@ -68,7 +68,7 @@ class AllRequests extends Component {
                         <section className="request">
                             <div className="request-details">
                                 <h2>Request name</h2>
-                                <p>Posted: 18.04.2022</p>
+                                <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
                                 <ul>
                                     <li>Tag 1</li>
