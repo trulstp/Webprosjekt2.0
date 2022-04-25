@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-
 import ListIcon from "./icons/list.png";
 import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
 import LogoutIcon from "./icons/logout.png";
+
 
 class Navigation extends Component {
     render() {

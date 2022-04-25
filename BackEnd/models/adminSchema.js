@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-const  { isEmail } = require('validator')
-const bcrypt = require('bcrypt')
+const mongoose = require('mongoose');
+const  { isEmail } = require('validator');
+const bcrypt = require('bcrypt');
 
 
-const loginSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
     {
         name: {
             type:String,
@@ -33,5 +33,11 @@ const loginSchema = new mongoose.Schema(
     }
 )
 
+adminSchema.pre('save', async function (next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt)
+    next()
+});
 
-module.exports = mongoose.model('mytable', loginSchema)
+
+module.exports = mongoose.model('adminTable', adminSchema)

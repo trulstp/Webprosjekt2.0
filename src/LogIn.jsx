@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./styles/login.css";
 import "./styles/login-media.css";
+import axios from "axios";
 
 class LogIn extends Component {
     constructor() {
@@ -25,6 +26,17 @@ class LogIn extends Component {
         });
     }
 
+    onSubmit(event)  {
+    event.preventDefault()
+    const login = {
+        username: this.state.username,
+        password: this.state.password
+    }
+    
+    axios('localhost:5000/app/login', login)
+        
+    
+    }
     render() {
         return (
             <div className="login-wrapper">
