@@ -36,6 +36,9 @@ const examSchema = new mongoose.Schema (
             type:String,
             required:true
         },
+        Applicants: {
+            type:String,
+        },
         date: {
             type:Date,
             default:Date.now
