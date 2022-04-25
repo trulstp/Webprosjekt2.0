@@ -52,7 +52,7 @@ class LogIn extends Component {
                         <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} className="input-field" />
 
                         <div>
-                            <a href="#">Sign up...</a>
+                            <a href="/signup">Sign up...</a>
                             <input type="submit" className="btn-login" value="Log in" />
                         </div>
                     </form>

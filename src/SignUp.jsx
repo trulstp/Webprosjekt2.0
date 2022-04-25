@@ -11,12 +11,15 @@ class SignUp extends Component {
             email: "",
             phonenr: "",
             university: "",
-            password: ""
+            education: "",
+            password: "",
+
         };
         this.changeName = this.changeName.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePhone = this.changePhone.bind(this);
         this.changeUniversity = this.changeUniversity.bind(this);
+        this.changeEducation = this.changeEducation.bind(this);
         this.changePassword = this.changePassword.bind(this);
     }
 
@@ -41,6 +44,12 @@ class SignUp extends Component {
     changeUniversity(event) {
         this.setState({
             university: event.target.value,
+        });
+    }
+
+    changeEducation(event) {
+        this.setState({
+            education: event.target.value,
         });
     }
 
@@ -95,11 +104,14 @@ class SignUp extends Component {
                     <label htmlFor="input-university">University</label>
                     <input type="text" id="input-university" onChange={this.changeUniversity} value={this.state.university} required />
 
+                    <label htmlFor="input-education">Education level</label>
+                    <input type="text" id="input-education" onChange={this.changeEducation} value={this.state.education} required />
+
                     <label htmlFor="input-password">Create password</label>
                     <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} minLength="6" maxLength="20" required />
 
                     <div className="signup-buttons">
-                        <a href="#">I already have an account...</a>
+                        <a href="/">I already have an account...</a>
                         <input type="submit" className="btn-signup" value="Sign up" />
                     </div>
                 </form>

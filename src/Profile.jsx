@@ -24,8 +24,8 @@ class Profile extends Component {
                     </ul>
                 </div>
                 <div className="profile-request-controls">
-                    <a href="#">View applicants</a>
-                    <a href="#">Edit request</a>
+                    <a href="/view-applicants">View applicants</a>
+                    <a href="/edit-request">Edit request</a>
                 </div>
             </section>
         );
@@ -46,7 +46,7 @@ class Profile extends Component {
                         </ul>
                     </div>
                     <div className="profile-request-controls">
-                        <a href="#">View request</a>
+                        <a href="/view-request">View request</a>
                     </div>
                 </section>
             </div>
@@ -74,7 +74,7 @@ class Profile extends Component {
                             porta enim sit vulputate adipiscing vel, non commodo. Sollicitudin morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat urna dictum faucibus tincidunt.
                         </p>
 
-                        <a href="#" className="edit-profile">
+                        <a href="/edit-profile" className="edit-profile">
                             Edit profile
                         </a>
                     </section>
