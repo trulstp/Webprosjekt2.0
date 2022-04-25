@@ -7,11 +7,11 @@ body {
     background-color: #082933;
 }
 
-section {
+.login {
     padding: 2%;
 }
 
-h1 {
+.login-wrapper h1 {
     margin-top: 0;
     padding-top: 20px;
 }
@@ -20,9 +20,10 @@ h1 {
     max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
+    grid-column: -1/1;
 }
 
-h1,
+.login-wrapper h1,
 .login h2,
 .statistics {
     text-align: center;
@@ -32,11 +33,11 @@ h1,
     background-color: #abc9d2;
 }
 
-form {
+.login-wrapper form {
     display: grid;
 }
 
-form div {
+.login-wrapper form div {
     display: flex;
     /*gap: 5%;*/
     justify-content: space-between;

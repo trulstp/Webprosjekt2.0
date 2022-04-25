@@ -44,7 +44,7 @@ class AllRequests extends Component {
                                 </ul>
                             </div>
                             <div className="view-request-wrapper">
-                                <a href="#" className="view-request">
+                                <a href="/view-request" className="view-request">
                                     View request
                                 </a>
                             </div>
@@ -61,7 +61,7 @@ class AllRequests extends Component {
                                 </ul>
                             </div>
                             <div className="view-request-wrapper">
-                                <a href="#" className="view-request">
+                                <a href="/view-request" className="view-request">
                                     View request
                                 </a>
                             </div>
@@ -78,7 +78,7 @@ class AllRequests extends Component {
                                 </ul>
                             </div>
                             <div className="view-request-wrapper">
-                                <a href="#" className="view-request">
+                                <a href="/view-request" className="view-request">
                                     View request
                                 </a>
                             </div>
