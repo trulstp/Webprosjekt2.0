@@ -31,11 +31,11 @@ const bcrypt = require('bcrypt')
         }
     
     const register = async (req, res) =>{
-        const registeredUser = new loginSchema({
+        const registeredUser = new adminSchema({
         name:req.body.name,
         email:req.body.email,
-        university:req.body.university,
         phonenr:req.body.phonenr,
+        university:req.body.university,
         password:req.body.password
         })    
         registeredUser.save()
@@ -56,8 +56,6 @@ const bcrypt = require('bcrypt')
              return response.json({message:error})
         }  
      }
-
-     const accepted = 
 
     module.exports = {
         register,

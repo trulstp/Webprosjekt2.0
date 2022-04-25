@@ -8,8 +8,4 @@ router.post('/register', register)
 
 router.get('/login', login)
 
-
-
-
-
 module.exports = router

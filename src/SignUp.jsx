@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import "./styles/signup.css";
 import "./styles/signup-media.css";
-import axios from 'axios'
+
 
 class SignUp extends Component {
     constructor() {
@@ -21,6 +22,7 @@ class SignUp extends Component {
         this.changeUniversity = this.changeUniversity.bind(this);
         this.changeEducation = this.changeEducation.bind(this);
         this.changePassword = this.changePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     changeName(event) {
@@ -61,7 +63,7 @@ class SignUp extends Component {
 
     onSubmit(event) {
         event.preventDefault()
-        try {
+        
         const registered = {
             name: this.state.name,
             email: this.state.email,
@@ -70,7 +72,7 @@ class SignUp extends Component {
             password: this.state.password
         }
 
-        axios.post('localhost:5000/app/register', registered)
+        axios.post("http://localhost:5000/admin/", registered)
         .then(response => console.log(response.data))
 
         this.setState({
@@ -80,10 +82,6 @@ class SignUp extends Component {
             university: "",
             password: ""
         })
-    } catch(err){
-        console.log(err)
-    }
-
     }
 
     render() {
@@ -99,7 +97,7 @@ class SignUp extends Component {
                     <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.email} required />
 
                     <label htmlFor="input-phone">Phone number</label>
-                    <input type="tel" id="input-phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" onChange={this.changePhone} value={this.state.phonenr} />
+                    <input type="tel" id="input-phone"  onChange={this.changePhone} value={this.state.phonenr} />
 
                     <label htmlFor="input-university">University</label>
                     <input type="text" id="input-university" onChange={this.changeUniversity} value={this.state.university} required />
@@ -111,7 +109,9 @@ class SignUp extends Component {
                     <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} minLength="6" maxLength="20" required />
 
                     <div className="signup-buttons">
+
                         <a href="/">I already have an account...</a>
+
                         <input type="submit" className="btn-signup" value="Sign up" />
                     </div>
                 </form>
