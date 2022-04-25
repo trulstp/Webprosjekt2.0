@@ -26,6 +26,9 @@ class EditProfile extends Component {
                         <label htmlFor="edit-university">University</label>
                         <input type="text" id="edit-university" className="updateProfile" required />
 
+                        <label htmlFor="edit-education">Education</label>
+                        <input type="text" id="edit-education" className="updateProfile" required />
+
                         <label htmlFor="edit-password">Change password</label>
                         <input type="password" id="edit-password" minLength="6" maxLength="20" className="updateProfile" required />
 
