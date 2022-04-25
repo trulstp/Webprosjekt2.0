@@ -38,6 +38,9 @@ class AllRequests extends Component {
                                 <h2>Request name</h2>
                                 <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
+                                <p>
+                                    <span className="bold">Minimum education for examiner:</span> Master
+                                </p>
                                 <ul>
                                     <li>Tag 1</li>
                                     <li>Tag 2</li>
@@ -55,6 +58,9 @@ class AllRequests extends Component {
                                 <h2>Request name</h2>
                                 <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
+                                <p>
+                                    <span className="bold">Minimum education for examiner:</span> Master
+                                </p>
                                 <ul>
                                     <li>Tag 1</li>
                                     <li>Tag 2</li>
@@ -72,6 +78,9 @@ class AllRequests extends Component {
                                 <h2>Request name</h2>
                                 <p>Application deadline: 24.04.2022</p>
                                 <p>Exam period: 21.05.2022 - 22.05.2022</p>
+                                <p>
+                                    <span className="bold">Minimum education for examiner:</span> Master
+                                </p>
                                 <ul>
                                     <li>Tag 1</li>
                                     <li>Tag 2</li>

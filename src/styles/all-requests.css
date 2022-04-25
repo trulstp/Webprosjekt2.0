@@ -45,7 +45,7 @@
 
 .view-request-wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .view-request {
@@ -63,7 +63,7 @@
 @media (min-width: 900px) {
     .request {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
     }
 
     .request-details {

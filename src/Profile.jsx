@@ -89,7 +89,7 @@ class Profile extends Component {
                                 }
                                 className={this.state.requestActive ? "active" : ""}
                             >
-                                Open requests
+                                Job ads
                             </button>
                             <button
                                 onClick={() =>
