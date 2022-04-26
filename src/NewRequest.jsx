@@ -5,17 +5,89 @@ import "./styles/style.css";
 import "./styles/media.css";
 import "./styles/new-request.css";
 import "./styles/new-request-media.css";
+import axios from "axios";
 
 class NewRequest extends Component {
     constructor() {
         super();
         this.tagList = [
-            { value: "t1", label: "t1" },
-            { value: "t2", label: "t2" },
-            { value: "t3", label: "t3" },
-            { value: "t4", label: "t4" },
-            { value: "t5", label: "t5" },
+            { value: "Estetiske fag, kunst- og musikkfag", label: "Estetiske fag, kunst- og musikkfag" },
+            { value: "Fiskeri-, husdyr- og landbruksfag", label: "Fiskeri-, husdyr- og landbruksfag" },
+            { value: "Historie, religion, idèfag", label: "Historie, religion, idèfag" },
+            { value: "Idrettsfag, kroppsøving og friluftsliv", label: "Idrettsfag, kroppsøving og friluftsliv" },
+            { value: "Informasjonsteknologi og informatikk", label: "Informasjonsteknologi og informatikk" },
+            { value: "Juridiske fag, rettsvitenskap, politi", label: "Juridiske fag, rettsvitenskap, politi" },
+            { value: "Lærer- og lektorutdanning", label: "Lærer- og lektorutdanning" },
+            { value: "Matematikk og naturfag", label: "Matematikk og naturfag" },
+            { value: "Mediefag, biblotekfag og journalistfag", label: "Mediefag, biblotekfag og journalistfag" },
+            { value: "Medisin, odontologi, helse- og sosialfag", label: "Medisin, odontologi, helse- og sosialfag" },
+            { value: "Pedagogiske fag", label: "Pedagogiske fag" },
+            { value: "Reiselivsfag, hotellfag", label: "Reiselivsfag, hotellfag" },
+            { value: "Samfunnsfag, psykologi", label: "Samfunnsfag, psykologi" },
+            { value: "Språk, litteratur", label: "Språk, litteratur" },
+            { value: "Teknologi, ingeniørfag og arkitektur", label: "Teknologi, ingeniørfag og arkitektur" },
+            { value: "Økonomi og administrasjon", label: "Økonomi og administrasjon" }
         ];
+        this.state = {
+            title: "",
+            deadline: "",
+            examStart: "",
+            examEnd: "",
+            tags: "",
+            minEdu: "",
+            examLvl: "",
+            description: ""
+        };
+        this.changeTitle = this.changeTitle.bind(this);
+        this.changeDeadline = this.changeDeadline.bind(this);
+        this.changeExamStart = this.changeExamStart.bind(this);
+        this.changeExamEnd = this.changeExamEnd.bind(this);
+        this.changeTags = this.changeTags.bind(this);
+        this.changeMinEdu = this.changeMinEdu.bind(this);
+        this.changeExamLvl = this.changeExamLvl.bind(this);
+        this.changeDescription = this.changeDescription.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    changeTitle(event) {
+        this.setState({
+            title: event.target.value,
+        });
+    }
+    changeDeadline(event) {
+        this.setState({
+            deadline: event.target.value,
+        });
+    }
+    changeExamStart(event) {
+        this.setState({
+            examStart: event.target.value,
+        });
+    }
+    changeExamEnd(event) {
+        this.setState({
+            examEnd: event.target.value,
+        });
+    }
+    changeTags(event) {
+        this.setState({
+            tags: event.target.value,
+        });
+    }
+    changeMinEdu(event) {
+        this.setState({
+            minEdu: event.target.value,
+        });
+    }
+    changeExamLvl(event) {
+        this.setState({
+            examLvl: event.target.value,
+        });
+    }
+    changeDescription(event) {
+        this.setState({
+            description: event.target.value,
+        });
     }
 
     getDate() {
@@ -25,6 +97,35 @@ class NewRequest extends Component {
         const day = date.getDate().toString().padStart(2, "0");
 
         return `${year}-${month}-${day}`;
+    }
+
+    onSubmit(event){
+        event.preventDefault()
+
+        const request = {
+            title: this.state.title,
+            deadline: this.state.deadline,
+            examStart: this.state.examStart,
+            examEnd: this.state.examEnd,
+            tags: this.state.tags,
+            minEdu: this.state.minEdu,
+            examLvl: this.state.examLvl,
+            description: this.state.description
+        }
+
+        axios.post("http://localhost:5000/exam/", request)
+        .then(response => console.log(response.data))
+
+        this.setState({
+            title: "",
+            deadline: "",
+            examStart: "",
+            examEnd: "",
+            tags: "",
+            minEdu: "",
+            examLvl: "",
+            description: ""
+        })
     }
 
     render() {

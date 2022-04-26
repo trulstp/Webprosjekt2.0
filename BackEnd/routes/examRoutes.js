@@ -7,9 +7,9 @@ router.post('/', registerExam)
 
 router.get('/list', getAll)
 
-router.get('/tag', findTag)
+router.get('/:tag', findTag)
 
-router.delete('/_id', deleteExam)
+router.delete('/:_id', deleteExam)
 
 router.patch('/:_id', updateExam)
 

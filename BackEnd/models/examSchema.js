@@ -2,16 +2,24 @@ const mongoose = require('mongoose')
 
 const examSchema = new mongoose.Schema (
     {
-        Title: {
+        title: {
             type:String,
             required: true
         },
 
-        Author: {
+        deadline: {
             type:String,
             required: true
         },
-        Tags: {
+        examStart: {
+            type:String,
+            required:true
+        },
+        examEnd: {
+            type:String,
+            required:true
+        },
+        tags: {
          type:String,
          enum: ['Estetiske fag, kunst- og musikkfag',
                 'Fiskeri-, husdyr- og landbruksfag',
@@ -32,7 +40,15 @@ const examSchema = new mongoose.Schema (
          required: true,
          min:1   
         },
-        Description: {
+        minEdu: {
+            type:String,
+            required:true
+        },
+        examLvl: {
+            type:String,
+            required:true
+        },
+        description: {
             type:String,
             required:true
         },

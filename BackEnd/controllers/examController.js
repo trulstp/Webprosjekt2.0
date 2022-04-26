@@ -21,9 +21,14 @@ const getAll = async (request, response) =>{
 
 const registerExam = (request, response) =>{
     const registeredExam = new examSchema({
-    Title:request.body.Title,
-    Tags:request.body.Tags,
-    Description:request.body.Description
+    title:request.body.title,
+    deadline:request.body.deadline,
+    examStart:request.body.examStart,
+    examEnd:request.body.examEnd,
+    tags:request.body.tags,
+    minEdu:request.body.minEdu,
+    examLvl:request.body.examLvl,
+    description:request.body.description
     })
     registeredExam.save()
     .then(data =>{
