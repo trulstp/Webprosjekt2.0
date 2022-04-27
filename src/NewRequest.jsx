@@ -102,6 +102,10 @@ class NewRequest extends Component {
     onSubmit(event){
         event.preventDefault()
 
+        console.log(this.state.examEnd)
+
+        console.log(this.state.tags)
+
         const request = {
             title: this.state.title,
             deadline: this.state.deadline,
@@ -112,7 +116,7 @@ class NewRequest extends Component {
             examLvl: this.state.examLvl,
             description: this.state.description
         }
-
+        
         axios.post("http://localhost:5000/exam/", request)
         .then(response => console.log(response.data))
 
@@ -134,36 +138,36 @@ class NewRequest extends Component {
             <div className="wrapper">
                 <main className="data">
                     <h1>New request</h1>
-                    <form>
+                    <form onSubmit={this.onSubmit}>
                         <label htmlFor="request-title">Title</label>
-                        <input type="text" id="request-title" className="input-field" placeholder="Title..." required />
+                        <input type="text" id="request-title" className="input-field" onChange={this.changeTitle} value={this.state.title} placeholder="Title..." required />
 
                         <label htmlFor="request-deadline">Application deadline</label>
-                        <input type="date" id="request-deadline" min={date} required />
+                        <input type="date" id="request-deadline" onChange={this.changeDeadline} value={this.state.deadline} min={date} required />
 
                         <div className="request-exam-period">
                             <div>
                                 <label htmlFor="request-exam-start">Exam period start</label>
-                                <input type="date" id="request-exam-start" min={date} required />
+                                <input type="date" id="request-exam-start" onChange={this.changeExamStart} value={this.state.examStart} min={date} required />
                             </div>
 
                             <div>
                                 <label htmlFor="request-exam-end">Exam period end</label>
-                                <input type="date" id="request-exam-end" min={date} required />
+                                <input type="date" id="request-exam-end" onChange={this.changeExamEnd} value={this.state.examEnd} min={date} required />
                             </div>
                         </div>
 
                         <label htmlFor="request-tag">Tags</label>
-                        <Select id="request-tag" options={this.tagList} isMulti />
+                        <Select id="request-tag" options={this.tagList} isMulti onChange={this.changeTags} value={this.state.tags} required />
 
                         <label htmlFor="request-examiner">Minimum education for examiner:</label>
-                        <input type="text" id="request-examiner" className="input-field" placeholder="Minimum education..." required />
+                        <input type="text" id="request-examiner" onChange={this.changeMinEdu} value={this.state.minEdu} className="input-field" placeholder="Minimum education..." required />
 
                         <label htmlFor="request-examination">Level of examination:</label>
-                        <input type="text" id="request-examination" className="input-field" placeholder="Examination level..." required />
+                        <input type="text" id="request-examination" onChange={this.changeExamLvl} value={this.state.examLvl} className="input-field" placeholder="Examination level..." required />
 
                         <label htmlFor="request-description">Description</label>
-                        <textarea id="request-description" placeholder="Your description here..." required />
+                        <textarea id="request-description" onChange={this.changeDescription} value={this.state.description} placeholder="Your description here..." required />
 
                         <input type="submit" className="btn-submit" value="Create request" />
                     </form>
