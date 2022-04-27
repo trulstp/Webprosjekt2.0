@@ -3,9 +3,12 @@
 }
 
 #search-tag {
-    margin-top: 5px;
+    margin-top: 15px;
     border: 1px solid rgb(39, 39, 39);
     border-radius: 5px;
+    padding: 4px;
+    font-size: 1rem;
+    max-width: 200px;
 }
 
 .request-list {
@@ -58,6 +61,12 @@
 
 .view-request:hover {
     text-decoration: underline;
+}
+
+@media (min-width: 500px) {
+    #search-tag {
+        max-width: none;
+    }
 }
 
 @media (min-width: 900px) {

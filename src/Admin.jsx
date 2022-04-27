@@ -1,61 +1,78 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import "./styles/style.css";
 import "./styles/media.css";
 import "./styles/admin.css";
+
+const AddUsers = ({ newUsers }) => {
+    return (
+        <div className="new-user-wrapper">
+            {newUsers.map((user) => (
+                <section className="new-user" key={user._id}>
+                    <div className="new-user-details">
+                        <h2>{user.name}</h2>
+                        <p>Email: {user.email}</p>
+                        <p>University: {user.university}</p>
+                        <p>Degree: {user.degree}</p>
+                    </div>
+                    <div className="btn-admin-wrapper">
+                        <button className="btn-admin">Accept</button>
+                        <button className="btn-admin delete-user">Reject</button>
+                    </div>
+                </section>
+            ))}
+        </div>
+    );
+};
+
+const ManageUsers = ({ addedUsers }) => {
+    return (
+        <div className="new-user-wrapper">
+            {addedUsers.map((user) => (
+                <section className="new-user" key={user._id}>
+                    <div className="new-user-details">
+                        <h2>{user.name}</h2>
+                        <p>Email: {user.email}</p>
+                        <p>University: {user.university}</p>
+                        <p>Degree: {user.degree}</p>
+                    </div>
+                    <div className="btn-admin-wrapper">
+                        <button className="btn-admin delete-user">Delete</button>
+                    </div>
+                </section>
+            ))}
+        </div>
+    );
+};
 
 class Admin extends Component {
     constructor() {
         super();
         this.state = {
             addUsersActive: true,
+            newUsers: [],
+            addedUsers: [],
         };
     }
 
-    addUsers() {
-        return (
-            <div className="new-user-wrapper">
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin">Accept</button>
-                        <button className="btn-admin delete-user">Reject</button>
-                    </div>
-                </section>
+    async componentDidMount() {
+        const newUser = await this.fetchNewUsers();
+        const manageUser = await this.fetchUsers();
 
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin">Accept</button>
-                        <button className="btn-admin delete-user">Reject</button>
-                    </div>
-                </section>
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin">Accept</button>
-                        <button className="btn-admin delete-user">Reject</button>
-                    </div>
-                </section>
-            </div>
-        );
+        this.setState({ newUsers: newUser.data });
+        this.setState({ addedUsers: manageUser.data });
     }
 
-    manageUsers() {
+    fetchNewUsers() {
+        return axios.get("http://localhost:5000/admin/");
+    }
+
+    fetchUsers() {
+        return axios.get("http://localhost:5000/app/");
+    }
+
+    /*manageUsers() {
         return (
             <div className="new-user-wrapper">
                 <section className="new-user">
@@ -69,36 +86,13 @@ class Admin extends Component {
                         <button className="btn-admin delete-user">Delete</button>
                     </div>
                 </section>
-
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin delete-user">Delete</button>
-                    </div>
-                </section>
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin delete-user">Delete</button>
-                    </div>
-                </section>
             </div>
         );
-    }
+    }*/
 
     render() {
-        const addUsers = this.addUsers();
-        const manageUsers = this.manageUsers();
+        const newUsers = this.state.newUsers;
+        const addedUsers = this.state.addedUsers;
 
         return (
             <div className="wrapper">
@@ -132,7 +126,7 @@ class Admin extends Component {
                             </button>
                         </div>
 
-                        <div id="admin-result">{this.state.addUsersActive ? addUsers : manageUsers}</div>
+                        <div id="admin-result">{this.state.addUsersActive ? <AddUsers newUsers={this.state.newUsers} /> : <ManageUsers addedUsers={this.state.addedUsers} />}</div>
                     </div>
                 </main>
             </div>
