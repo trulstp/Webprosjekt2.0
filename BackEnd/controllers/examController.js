@@ -3,7 +3,7 @@ const examSchema = require('../models/examSchema')
 
 const findTag = async (request, response) => {
     try{
-        const tags = await examSchema.find({Tags:request.params.Tags})
+        const tags = await examSchema.find({tags:request.params.tags})
         response.status(200).json({tags})
     }catch(error){
         response.json({message:error})
@@ -12,11 +12,19 @@ const findTag = async (request, response) => {
 
 const getAll = async (request, response) =>{
    try{ 
-        const showExams = await examSchema.find().select(['-Description', '-Applicants']);
+        const showExams = await examSchema.find().select(['-description', '-Applicants', 'minEdu']);
         return response.json(showExams)
    } catch(error) {
         return response.json({message:error})
    }  
+}
+const findExam = async (request, response) => {
+    try{
+        const examId = await examSchema.find({_id:request.params._id})
+        response.status(200).json({examId})
+    }catch(error){
+        response.json({message:error})
+    }
 }
 
 const registerExam = (request, response) =>{
@@ -67,5 +75,6 @@ module.exports = {
     registerExam,
     findTag,
     getAll,
-    updateExam
+    updateExam,
+    findExam
 }
