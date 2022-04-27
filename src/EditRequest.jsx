@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
-
+import axios from "axios";
 import "./styles/style.css";
 import "./styles/media.css";
 import "./styles/new-request.css";
@@ -10,12 +10,84 @@ class EditRequest extends Component {
     constructor() {
         super();
         this.tagList = [
-            { value: "t1", label: "t1" },
-            { value: "t2", label: "t2" },
-            { value: "t3", label: "t3" },
-            { value: "t4", label: "t4" },
-            { value: "t5", label: "t5" },
+            { value: "Estetiske fag, kunst- og musikkfag", label: "Estetiske fag, kunst- og musikkfag" },
+            { value: "Fiskeri-, husdyr- og landbruksfag", label: "Fiskeri-, husdyr- og landbruksfag" },
+            { value: "Historie, religion, idèfag", label: "Historie, religion, idèfag" },
+            { value: "Idrettsfag, kroppsøving og friluftsliv", label: "Idrettsfag, kroppsøving og friluftsliv" },
+            { value: "Informasjonsteknologi og informatikk", label: "Informasjonsteknologi og informatikk" },
+            { value: "Juridiske fag, rettsvitenskap, politi", label: "Juridiske fag, rettsvitenskap, politi" },
+            { value: "Lærer- og lektorutdanning", label: "Lærer- og lektorutdanning" },
+            { value: "Matematikk og naturfag", label: "Matematikk og naturfag" },
+            { value: "Mediefag, biblotekfag og journalistfag", label: "Mediefag, biblotekfag og journalistfag" },
+            { value: "Medisin, odontologi, helse- og sosialfag", label: "Medisin, odontologi, helse- og sosialfag" },
+            { value: "Pedagogiske fag", label: "Pedagogiske fag" },
+            { value: "Reiselivsfag, hotellfag", label: "Reiselivsfag, hotellfag" },
+            { value: "Samfunnsfag, psykologi", label: "Samfunnsfag, psykologi" },
+            { value: "Språk, litteratur", label: "Språk, litteratur" },
+            { value: "Teknologi, ingeniørfag og arkitektur", label: "Teknologi, ingeniørfag og arkitektur" },
+            { value: "Økonomi og administrasjon", label: "Økonomi og administrasjon" }
         ];
+        this.state = {
+            title: "",
+            deadline: "",
+            examStart: "",
+            examEnd: "",
+            tags: "",
+            minEdu: "",
+            examLvl: "",
+            description: ""
+        };
+        this.changeTitle = this.changeTitle.bind(this);
+        this.changeDeadline = this.changeDeadline.bind(this);
+        this.changeExamStart = this.changeExamStart.bind(this);
+        this.changeExamEnd = this.changeExamEnd.bind(this);
+        this.changeTags = this.changeTags.bind(this);
+        this.changeMinEdu = this.changeMinEdu.bind(this);
+        this.changeExamLvl = this.changeExamLvl.bind(this);
+        this.changeDescription = this.changeDescription.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    changeTitle(event) {
+        this.setState({
+            title: event.target.value,
+        });
+    }
+    changeDeadline(event) {
+        this.setState({
+            deadline: event.target.value,
+        });
+    }
+    changeExamStart(event) {
+        this.setState({
+            examStart: event.target.value,
+        });
+    }
+    changeExamEnd(event) {
+        this.setState({
+            examEnd: event.target.value,
+        });
+    }
+    changeTags(event) {
+        console.log(event[0]['value'])
+        this.setState({
+            tags: event[0]['value'],
+        });
+    }
+    changeMinEdu(event) {
+        this.setState({
+            minEdu: event.target.value,
+        });
+    }
+    changeExamLvl(event) {
+        this.setState({
+            examLvl: event.target.value,
+        });
+    }
+    changeDescription(event) {
+        this.setState({
+            description: event.target.value,
+        });
     }
 
     getDate() {
@@ -27,42 +99,75 @@ class EditRequest extends Component {
         return `${year}-${month}-${day}`;
     }
 
+    onSubmit(event){
+        event.preventDefault()
+
+        console.log(this.state.examEnd)
+
+        console.log(this.state.tags)
+
+        const request = {
+            title: this.state.title,
+            deadline: this.state.deadline,
+            examStart: this.state.examStart,
+            examEnd: this.state.examEnd,
+            tags: this.state.tags,
+            minEdu: this.state.minEdu,
+            examLvl: this.state.examLvl,
+            description: this.state.description
+        }
+        
+        axios.patch("http://localhost:5000/exam/", request)
+        .then(response => console.log(response.data))
+
+        this.setState({
+            title: "",
+            deadline: "",
+            examStart: "",
+            examEnd: "",
+            tags: "",
+            minEdu: "",
+            examLvl: "",
+            description: ""
+        })
+    }
+
     render() {
         const date = this.getDate();
         return (
             <div className="wrapper">
                 <main className="data">
                     <h1>Edit request</h1>
-                    <form>
+                    <form onSubmit={this.onSubmit}>
                         <label htmlFor="request-title">Title</label>
-                        <input type="text" id="request-title" className="input-field" placeholder="Title..." required />
+                        <input type="text" id="request-title" className="input-field" onChange={this.changeTitle} value={this.state.title} placeholder="Title..." required />
 
                         <label htmlFor="request-deadline">Application deadline</label>
-                        <input type="date" id="request-deadline" min={date} required />
+                        <input type="date" id="request-deadline" onChange={this.changeDeadline} value={this.state.deadline} min={date} required />
 
                         <div className="request-exam-period">
                             <div>
                                 <label htmlFor="request-exam-start">Exam period start</label>
-                                <input type="date" id="request-exam-start" min={date} required />
+                                <input type="date" id="request-exam-start" onChange={this.changeExamStart} value={this.state.examStart} min={date} required />
                             </div>
 
                             <div>
                                 <label htmlFor="request-exam-end">Exam period end</label>
-                                <input type="date" id="request-exam-end" min={date} required />
+                                <input type="date" id="request-exam-end" onChange={this.changeExamEnd} value={this.state.examEnd} min={date} required />
                             </div>
                         </div>
 
                         <label htmlFor="request-tag">Tags</label>
-                        <Select id="request-tag" options={this.tagList} isMulti />
+                        <Select id="request-tag" options={this.tagList} isMulti onChange={this.changeTags} value={this.state.tags} />
 
                         <label htmlFor="request-examiner">Minimum education for examiner:</label>
-                        <input type="text" id="request-examiner" className="input-field" placeholder="Minimum education..." required />
+                        <input type="text" id="request-examiner" onChange={this.changeMinEdu} value={this.state.minEdu} className="input-field" placeholder="Minimum education..." required />
 
                         <label htmlFor="request-examination">Level of examination:</label>
-                        <input type="text" id="request-examination" className="input-field" placeholder="Examination level..." required />
+                        <input type="text" id="request-examination" onChange={this.changeExamLvl} value={this.state.examLvl} className="input-field" placeholder="Examination level..." required />
 
                         <label htmlFor="request-description">Description</label>
-                        <textarea id="request-description" placeholder="Your description here..." required />
+                        <textarea id="request-description" onChange={this.changeDescription} value={this.state.description} placeholder="Your description here..." required />
 
                         <input type="submit" className="btn-submit" value="Edit request" />
                     </form>

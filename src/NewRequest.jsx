@@ -70,8 +70,9 @@ class NewRequest extends Component {
         });
     }
     changeTags(event) {
+        console.log(event[0]['value'])
         this.setState({
-            tags: event.target.value,
+            tags: event[0].value,
         });
     }
     changeMinEdu(event) {

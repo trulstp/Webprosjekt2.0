@@ -11,11 +11,22 @@ class AllRequests extends Component {
     constructor() {
         super();
         this.tagList = [
-            { value: "t1", label: "t1" },
-            { value: "t2", label: "t2" },
-            { value: "t3", label: "t3" },
-            { value: "t4", label: "t4" },
-            { value: "t5", label: "t5" },
+            { value: "Estetiske fag, kunst- og musikkfag", label: "Estetiske fag, kunst- og musikkfag" },
+            { value: "Fiskeri-, husdyr- og landbruksfag", label: "Fiskeri-, husdyr- og landbruksfag" },
+            { value: "Historie, religion, idèfag", label: "Historie, religion, idèfag" },
+            { value: "Idrettsfag, kroppsøving og friluftsliv", label: "Idrettsfag, kroppsøving og friluftsliv" },
+            { value: "Informasjonsteknologi og informatikk", label: "Informasjonsteknologi og informatikk" },
+            { value: "Juridiske fag, rettsvitenskap, politi", label: "Juridiske fag, rettsvitenskap, politi" },
+            { value: "Lærer- og lektorutdanning", label: "Lærer- og lektorutdanning" },
+            { value: "Matematikk og naturfag", label: "Matematikk og naturfag" },
+            { value: "Mediefag, biblotekfag og journalistfag", label: "Mediefag, biblotekfag og journalistfag" },
+            { value: "Medisin, odontologi, helse- og sosialfag", label: "Medisin, odontologi, helse- og sosialfag" },
+            { value: "Pedagogiske fag", label: "Pedagogiske fag" },
+            { value: "Reiselivsfag, hotellfag", label: "Reiselivsfag, hotellfag" },
+            { value: "Samfunnsfag, psykologi", label: "Samfunnsfag, psykologi" },
+            { value: "Språk, litteratur", label: "Språk, litteratur" },
+            { value: "Teknologi, ingeniørfag og arkitektur", label: "Teknologi, ingeniørfag og arkitektur" },
+            { value: "Økonomi og administrasjon", label: "Økonomi og administrasjon" }
         ];
     }
 
