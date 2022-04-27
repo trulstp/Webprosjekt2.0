@@ -12,6 +12,7 @@ import EditProfile from "./EditProfile";
 import Navigation from "./Navigation";
 import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
+import Admin from "./Admin";
 
 const NavigationRoutes = () => {
     const SidebarLayout = () => (
@@ -41,6 +42,8 @@ const NavigationRoutes = () => {
                     <Route path="/view-applicants" element={<ViewApplicants />} />
 
                     <Route path="/view-request" element={<ViewRequest />} />
+
+                    <Route path="/admin" element={<Admin />} />
                 </Route>
             </Routes>
         </Router>
