@@ -24,8 +24,8 @@ const getAll = (request, response) => {
 
 const findExam = async (request, response) => {
     try {
-        const examId = await examSchema.find({ _id: request.params._id });
-        response.status(200).json({ examId });
+        const req = await examSchema.find({ _id: request.params._id });
+        response.status(200).json({ req });
     } catch (error) {
         response.json({ message: error });
     }

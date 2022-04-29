@@ -1,9 +1,53 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import "./styles/style.css";
 import "./styles/media.css";
 import "./styles/view-request.css";
 
 class ViewRequest extends Component {
+    constructor() {
+        super();
+        this.state = {
+            title: "",
+            deadline: "",
+            examStart: "",
+            examEnd: "",
+            tags: "",
+            minEdu: "",
+            examLvl: "",
+            description: "",
+            date: "",
+        };
+    }
+
+    async componentDidMount() {
+        const id = this.fetchId();
+        const response = await this.fetchRequest(id);
+        this.setState({
+            title: response.data.req[0].title,
+            deadline: response.data.req[0].deadline,
+            examStart: response.data.req[0].examStart,
+            examEnd: response.data.req[0].examEnd,
+            tags: response.data.req[0].tags,
+            minEdu: response.data.req[0].minEdu,
+            examLvl: response.data.req[0].examLvl,
+            description: response.data.req[0].description,
+            date: response.data.req[0].date,
+        });
+    }
+
+    fetchRequest(id) {
+        return axios.get(`http://localhost:5000/exam/${id}`);
+    }
+
+    fetchId() {
+        const queryString = document.location.search;
+        const params = new URLSearchParams(queryString);
+        const id = params.get("id");
+        return id;
+    }
+
     render() {
         return (
             <div className="wrapper">
@@ -11,36 +55,31 @@ class ViewRequest extends Component {
                     <a href="#top">Top of page</a>
                 </div>
                 <main className="data">
-                    <h1>Request name</h1>
+                    <h1>{this.state.title}</h1>
                     <div className="details">
                         <p>
                             <span className="bold">Author:</span> Name Lastname
                         </p>
-                        <p>Posted: 18.04.2022</p>
-                        <p>Application deadline: 24.04.2022</p>
-                        <p>Exam period: 21.05.2022 - 22.05.2022</p>
+                        <p>Posted: {this.state.date}</p>
+                        <p>Application deadline: {this.state.deadline}</p>
+                        <p>
+                            Exam period: {this.state.examStart} - {this.state.examEnd}
+                        </p>
                         <ul>
-                            <li>Tag 1</li>
-                            <li>Tag 2</li>
+                            <li>{this.state.tags}</li>
                         </ul>
                     </div>
 
                     <h2>Details</h2>
                     <p>
-                        <span className="bold">Minimum education for examiner:</span> Master
+                        <span className="bold">Minimum education for examiner:</span> {this.state.minEdu}
                     </p>
                     <p>
-                        <span className="bold">Level of examination:</span> Bachelor
+                        <span className="bold">Level of examination:</span> {this.state.examLvl}
                     </p>
 
                     <h2>Description</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est massa sit imperdiet pharetra viverra. Augue porta enim sit vulputate adipiscing vel, non commodo. Sollicitudin
-                        morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat urna dictum faucibus tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est massa
-                        sit imperdiet pharetra viverra. Augue porta enim sit vulputate adipiscing vel, non commodo. Sollicitudin morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat
-                        urna dictum faucibus tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est massa sit imperdiet pharetra viverra. Augue porta enim sit vulputate
-                        adipiscing vel, non commodo. Sollicitudin morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat urna dictum faucibus tincidunt.
-                    </p>
+                    <p>{this.state.description}</p>
 
                     <div className="btn-wrapper">
                         <button className="apply">Apply as second examiner</button>

@@ -24,7 +24,7 @@ const Requests = ({ requests }) => {
                         </ul>
                     </div>
                     <div className="view-request-wrapper">
-                        <a href="/view-request" className="view-request">
+                        <a href={getLink(request._id)} className="view-request">
                             View request
                         </a>
                     </div>
@@ -32,6 +32,10 @@ const Requests = ({ requests }) => {
             ))}
         </div>
     );
+};
+
+const getLink = (id) => {
+    return `view-request?id=${id}`;
 };
 
 class AllRequests extends Component {
@@ -52,8 +56,6 @@ class AllRequests extends Component {
     }
 
     render() {
-        const requests = this.state.requests;
-
         return (
             <div className="wrapper">
                 <div className="to-top">
