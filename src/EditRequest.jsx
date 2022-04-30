@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Select from "react-select";
 import axios from "axios";
 import "./styles/style.css";
 import "./styles/media.css";
@@ -9,24 +8,6 @@ import "./styles/new-request-media.css";
 class EditRequest extends Component {
     constructor() {
         super();
-        this.tagList = [
-            { value: "Estetiske fag, kunst- og musikkfag", label: "Estetiske fag, kunst- og musikkfag" },
-            { value: "Fiskeri-, husdyr- og landbruksfag", label: "Fiskeri-, husdyr- og landbruksfag" },
-            { value: "Historie, religion, idèfag", label: "Historie, religion, idèfag" },
-            { value: "Idrettsfag, kroppsøving og friluftsliv", label: "Idrettsfag, kroppsøving og friluftsliv" },
-            { value: "Informasjonsteknologi og informatikk", label: "Informasjonsteknologi og informatikk" },
-            { value: "Juridiske fag, rettsvitenskap, politi", label: "Juridiske fag, rettsvitenskap, politi" },
-            { value: "Lærer- og lektorutdanning", label: "Lærer- og lektorutdanning" },
-            { value: "Matematikk og naturfag", label: "Matematikk og naturfag" },
-            { value: "Mediefag, biblotekfag og journalistfag", label: "Mediefag, biblotekfag og journalistfag" },
-            { value: "Medisin, odontologi, helse- og sosialfag", label: "Medisin, odontologi, helse- og sosialfag" },
-            { value: "Pedagogiske fag", label: "Pedagogiske fag" },
-            { value: "Reiselivsfag, hotellfag", label: "Reiselivsfag, hotellfag" },
-            { value: "Samfunnsfag, psykologi", label: "Samfunnsfag, psykologi" },
-            { value: "Språk, litteratur", label: "Språk, litteratur" },
-            { value: "Teknologi, ingeniørfag og arkitektur", label: "Teknologi, ingeniørfag og arkitektur" },
-            { value: "Økonomi og administrasjon", label: "Økonomi og administrasjon" }
-        ];
         this.state = {
             title: "",
             deadline: "",
@@ -35,7 +16,7 @@ class EditRequest extends Component {
             tags: "",
             minEdu: "",
             examLvl: "",
-            description: ""
+            description: "",
         };
         this.changeTitle = this.changeTitle.bind(this);
         this.changeDeadline = this.changeDeadline.bind(this);
@@ -69,11 +50,11 @@ class EditRequest extends Component {
         });
     }
     changeTags(event) {
-        console.log(event[0]['value'])
         this.setState({
-            tags: event[0]['value'],
+            tags: event.target.value,
         });
     }
+
     changeMinEdu(event) {
         this.setState({
             minEdu: event.target.value,
@@ -99,12 +80,39 @@ class EditRequest extends Component {
         return `${year}-${month}-${day}`;
     }
 
-    onSubmit(event){
-        event.preventDefault()
+    async componentDidMount() {
+        const id = this.fetchId();
+        const response = await this.fetchRequest(id);
+        this.setState({
+            title: response.data.req[0].title,
+            deadline: response.data.req[0].deadline,
+            examStart: response.data.req[0].examStart,
+            examEnd: response.data.req[0].examEnd,
+            tags: response.data.req[0].tags,
+            minEdu: response.data.req[0].minEdu,
+            examLvl: response.data.req[0].examLvl,
+            description: response.data.req[0].description,
+            date: response.data.req[0].date,
+        });
+    }
 
-        console.log(this.state.examEnd)
+    fetchRequest(id) {
+        return axios.get(`http://localhost:5000/exam/${id}`);
+    }
 
-        console.log(this.state.tags)
+    fetchId() {
+        const queryString = document.location.search;
+        const params = new URLSearchParams(queryString);
+        const id = params.get("id");
+        return id;
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+
+        console.log(this.state.examEnd);
+
+        console.log(this.state.tags);
 
         const request = {
             title: this.state.title,
@@ -114,22 +122,12 @@ class EditRequest extends Component {
             tags: this.state.tags,
             minEdu: this.state.minEdu,
             examLvl: this.state.examLvl,
-            description: this.state.description
-        }
-        
-        axios.patch("http://localhost:5000/exam/", request)
-        .then(response => console.log(response.data))
+            description: this.state.description,
+        };
 
-        this.setState({
-            title: "",
-            deadline: "",
-            examStart: "",
-            examEnd: "",
-            tags: "",
-            minEdu: "",
-            examLvl: "",
-            description: ""
-        })
+        axios.patch(`http://localhost:5000/exam/${this.fetchId()}`, request).then((response) => console.log(response.data));
+
+        //window.location.href = "http://localhost:3000/my-profile";
     }
 
     render() {
@@ -157,8 +155,26 @@ class EditRequest extends Component {
                             </div>
                         </div>
 
-                        <label htmlFor="request-tag">Tags</label>
-                        <Select id="request-tag" options={this.tagList} isMulti onChange={this.changeTags} value={this.state.tags} />
+                        <label htmlFor="request-tag">Tag</label>
+                        <select id="request-tag" value={this.state.tags} onChange={this.changeTags}>
+                            <option value="">Select a tag</option>
+                            <option value="Estetiske fag, kunst- og musikkfag">Estetiske fag, kunst- og musikkfag</option>
+                            <option value="Fiskeri-, husdyr- og landbruksfag">Fiskeri-, husdyr- og landbruksfag</option>
+                            <option value="Historie, religion, idèfag">Historie, religion, idèfag</option>
+                            <option value="Idrettsfag, kroppsøving og friluftsliv">Idrettsfag, kroppsøving og friluftsliv</option>
+                            <option value="Informasjonsteknologi og informatikk">Informasjonsteknologi og informatikk</option>
+                            <option value="Juridiske fag, rettsvitenskap, politi">Juridiske fag, rettsvitenskap, politi</option>
+                            <option value="Lærer- og lektorutdanning">Lærer- og lektorutdanning</option>
+                            <option value="Matematikk og naturfag">Matematikk og naturfag</option>
+                            <option value="Mediefag, biblotekfag og journalistfag">Mediefag, biblotekfag og journalistfag</option>
+                            <option value="Medisin, odontologi, helse- og sosialfag">Medisin, odontologi, helse- og sosialfag</option>
+                            <option value="Pedagogiske fag">Pedagogiske fag</option>
+                            <option value="Reiselivsfag, hotellfag">Reiselivsfag, hotellfag</option>
+                            <option value="Samfunnsfag, psykologi">Samfunnsfag, psykologi</option>
+                            <option value="Språk, litteratur">Språk, litteratur</option>
+                            <option value="Teknologi, ingeniørfag og arkitektur">Teknologi, ingeniørfag og arkitektur</option>
+                            <option value="Økonomi og administrasjon">Økonomi og administrasjon</option>
+                        </select>
 
                         <label htmlFor="request-examiner">Minimum education for examiner:</label>
                         <input type="text" id="request-examiner" onChange={this.changeMinEdu} value={this.state.minEdu} className="input-field" placeholder="Minimum education..." required />
@@ -169,7 +185,7 @@ class EditRequest extends Component {
                         <label htmlFor="request-description">Description</label>
                         <textarea id="request-description" onChange={this.changeDescription} value={this.state.description} placeholder="Your description here..." required />
 
-                        <input type="submit" className="btn-submit" value="Edit request" />
+                        <input type="submit" className="btn-submit" value="Update request" />
                     </form>
                 </main>
             </div>

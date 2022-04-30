@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./styles/login.css";
 import "./styles/login-media.css";
-import axios from "axios";
 
 class LogIn extends Component {
     constructor() {
@@ -9,6 +9,7 @@ class LogIn extends Component {
         this.state = {
             username: "",
             password: "",
+            requestList: [],
         };
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
@@ -26,17 +27,25 @@ class LogIn extends Component {
         });
     }
 
-    onSubmit(event)  {
-    event.preventDefault()
-    const login = {
-        username: this.state.username,
-        password: this.state.password
+    async componentDidMount() {
+        const response = await this.fetchRequests();
+        this.setState({ requestList: response.data });
     }
-    
-    axios('localhost:5000/app/login', login)
-        
-    
+
+    fetchRequests() {
+        return axios.get("http://localhost:5000/exam/");
     }
+
+    onSubmit(event) {
+        event.preventDefault();
+        const login = {
+            username: this.state.username,
+            password: this.state.password,
+        };
+
+        axios("localhost:5000/app/login", login);
+    }
+
     render() {
         return (
             <div className="login-wrapper">
@@ -75,7 +84,8 @@ class LogIn extends Component {
                     </p>
                     <p>
                         <span>Total number of requests:</span>
-                        <br />0
+                        <br />
+                        {this.state.requestList.length}
                     </p>
                 </section>
             </div>

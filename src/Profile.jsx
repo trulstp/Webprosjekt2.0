@@ -1,34 +1,58 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import "./styles/style.css";
 import "./styles/media.css";
 import "./styles/profile.css";
+
+const ShowRequests = ({ requestList }) => {
+    return (
+        <div>
+            {requestList.map((currentRequest) => (
+                <section className="profile-request" key={currentRequest._id}>
+                    <div className="profile-request-details">
+                        <h2>{currentRequest.title}</h2>
+                        <p>Posted: {currentRequest.deadline}</p>
+                        <p>
+                            Exam period: {currentRequest.examStart} - {currentRequest.examEnd}
+                        </p>
+                        <p>
+                            <span className="bold">Minimum education for examiner:</span> {currentRequest.minEdu}
+                        </p>
+                        <ul>
+                            <li>{currentRequest.tags}</li>
+                        </ul>
+                    </div>
+                    <div className="profile-request-controls">
+                        <a href="/view-applicants">View applicants</a>
+                        <a href={getLink(currentRequest._id)}>Edit request</a>
+                    </div>
+                </section>
+            ))}
+        </div>
+    );
+};
+
+const getLink = (id) => {
+    return `edit-request?id=${id}`;
+};
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
+            requestList: [],
             requestActive: true,
         };
     }
 
-    showRequests() {
-        return (
-            <section className="profile-request">
-                <div className="profile-request-details">
-                    <h2>Request name</h2>
-                    <p>Posted: 18.04.2022</p>
-                    <p>Exam period: 21.05.2022 - 22.05.2022</p>
-                    <ul>
-                        <li>Tag 1</li>
-                        <li>Tag 2</li>
-                    </ul>
-                </div>
-                <div className="profile-request-controls">
-                    <a href="/view-applicants">View applicants</a>
-                    <a href="/edit-request">Edit request</a>
-                </div>
-            </section>
-        );
+    async componentDidMount() {
+        const response = await this.fetchRequests();
+        this.setState({ requestList: response.data });
+    }
+
+    fetchRequests() {
+        return axios.get("http://localhost:5000/exam/");
     }
 
     showHistory() {
@@ -54,7 +78,6 @@ class Profile extends Component {
     }
 
     render() {
-        const showRequests = this.showRequests();
         const showHistory = this.showHistory();
 
         return (
@@ -103,7 +126,7 @@ class Profile extends Component {
                             </button>
                         </div>
 
-                        <div id="profile-result">{this.state.requestActive ? showRequests : showHistory}</div>
+                        <div id="profile-result">{this.state.requestActive ? <ShowRequests requestList={this.state.requestList} /> : showHistory}</div>
                     </div>
                 </main>
             </div>
