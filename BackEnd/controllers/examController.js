@@ -41,6 +41,8 @@ const registerExam = (request, response) => {
         minEdu: request.body.minEdu,
         examLvl: request.body.examLvl,
         description: request.body.description,
+        open: true,
+        matched: false,
     });
     registeredExam
         .save()

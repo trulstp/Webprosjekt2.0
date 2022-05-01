@@ -15,6 +15,10 @@ body {
     font-weight: bold;
 }
 
+.italic {
+    font-style: italic;
+}
+
 #root {
     max-width: 1200px;
     margin: 0 auto;

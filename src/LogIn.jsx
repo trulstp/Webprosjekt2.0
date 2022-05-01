@@ -46,6 +46,26 @@ class LogIn extends Component {
         axios("localhost:5000/app/login", login);
     }
 
+    checkNumber(type) {
+        const requestList = this.state.requestList;
+        let numberOpen = 0;
+        let numberMatched = 0;
+        requestList.forEach((request) => {
+            if (request.open) {
+                numberOpen++;
+            }
+            if (request.matched) {
+                numberMatched++;
+            }
+        });
+
+        if (type === "open") {
+            return numberOpen;
+        } else if (type === "matched") {
+            return numberMatched;
+        }
+    }
+
     render() {
         return (
             <div className="login-wrapper">
@@ -76,11 +96,13 @@ class LogIn extends Component {
                     <h2>Statistics</h2>
                     <p>
                         <span>Current open requests:</span>
-                        <br />0
+                        <br />
+                        {this.checkNumber("open")}
                     </p>
                     <p>
                         <span>Matched requests:</span>
-                        <br />0
+                        <br />
+                        {this.checkNumber("matched")}
                     </p>
                     <p>
                         <span>Total number of requests:</span>

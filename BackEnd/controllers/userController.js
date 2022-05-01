@@ -33,9 +33,11 @@ const register = async (req, res) => {
     const registeredUser = new loginSchema({
         name: req.body.name,
         email: req.body.email,
-        university: req.body.university,
         phonenr: req.body.phonenr,
+        university: req.body.university,
+        degree: req.body.degree,
         password: req.body.password,
+        description: "",
     });
     registeredUser
         .save()
@@ -74,8 +76,31 @@ const getAll = async (request, response) => {
     }
 };
 
+const findUser = async (request, response) => {
+    try {
+        const user = await loginSchema.find({ _id: request.params._id });
+        response.status(200).json({ user });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
+const updateUser = async (request, response) => {
+    try {
+        const _id = request.params;
+        const updateUser = await examSchema.findOneAndUpdate(_id, request.body, {
+            new: true,
+        });
+        response.send(updateUser);
+    } catch (e) {
+        response.status(404).send(e);
+    }
+};
+
 module.exports = {
     register,
     login,
     getAll,
+    findUser,
+    updateUser,
 };

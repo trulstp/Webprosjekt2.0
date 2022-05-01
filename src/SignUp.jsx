@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./styles/signup.css";
 import "./styles/signup-media.css";
-
 
 class SignUp extends Component {
     constructor() {
@@ -14,7 +13,6 @@ class SignUp extends Component {
             university: "",
             education: "",
             password: "",
-
         };
         this.changeName = this.changeName.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
@@ -62,26 +60,25 @@ class SignUp extends Component {
     }
 
     onSubmit(event) {
-        event.preventDefault()
-        
+        event.preventDefault();
+
         const registered = {
             name: this.state.name,
             email: this.state.email,
             phonenr: this.state.phonenr,
             university: this.state.university,
-            password: this.state.password
-        }
+            password: this.state.password,
+        };
 
-        axios.post("http://localhost:5000/admin/", registered)
-        .then(response => console.log(response.data))
+        axios.post("http://localhost:5000/admin/", registered).then((response) => console.log(response.data));
 
         this.setState({
             name: "",
             email: "",
             phonenr: "",
             university: "",
-            password: ""
-        })
+            password: "",
+        });
     }
 
     render() {
@@ -90,26 +87,27 @@ class SignUp extends Component {
                 <h1>Sign up</h1>
 
                 <form onSubmit={this.onSubmit}>
-                    <label htmlFor="input-name">Full name</label>
+                    <label htmlFor="input-name">Full name*</label>
                     <input type="text" id="input-name" onChange={this.changeName} value={this.state.name} required />
 
-                    <label htmlFor="input-email">Email</label>
+                    <label htmlFor="input-email">Email*</label>
                     <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.email} required />
 
                     <label htmlFor="input-phone">Phone number</label>
-                    <input type="tel" id="input-phone"  onChange={this.changePhone} value={this.state.phonenr} />
+                    <input type="tel" id="input-phone" onChange={this.changePhone} value={this.state.phonenr} />
 
-                    <label htmlFor="input-university">University</label>
+                    <label htmlFor="input-university">University*</label>
                     <input type="text" id="input-university" onChange={this.changeUniversity} value={this.state.university} required />
 
-                    <label htmlFor="input-education">Education level</label>
+                    <label htmlFor="input-education">Education level*</label>
                     <input type="text" id="input-education" onChange={this.changeEducation} value={this.state.education} required />
 
-                    <label htmlFor="input-password">Create password</label>
+                    <label htmlFor="input-password">Create password*</label>
                     <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} minLength="6" maxLength="20" required />
-
+                    <p>
+                        <span className="italic">* is required</span>
+                    </p>
                     <div className="signup-buttons">
-
                         <a href="/">I already have an account...</a>
 
                         <input type="submit" className="btn-signup" value="Sign up" />
@@ -119,7 +117,5 @@ class SignUp extends Component {
         );
     }
 }
-
-
 
 export default SignUp;

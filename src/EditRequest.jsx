@@ -101,18 +101,14 @@ class EditRequest extends Component {
     }
 
     fetchId() {
-        const queryString = document.location.search;
-        const params = new URLSearchParams(queryString);
-        const id = params.get("id");
+        const query = document.location.search;
+        const parameter = new URLSearchParams(query);
+        const id = parameter.get("id");
         return id;
     }
 
     onSubmit(event) {
         event.preventDefault();
-
-        console.log(this.state.examEnd);
-
-        console.log(this.state.tags);
 
         const request = {
             title: this.state.title,

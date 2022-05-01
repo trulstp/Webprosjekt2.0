@@ -17,7 +17,7 @@ const Requests = ({ requests }) => {
                             Exam period: {request.examStart} - {request.examEnd}
                         </p>
                         <p>
-                            <span className="bold">Minimum education for examiner:</span> {request.minEdu}
+                            <span className="bold">Level of examination:</span> {request.examLvl}
                         </p>
                         <ul>
                             <li>{request.tags}</li>
@@ -43,7 +43,11 @@ class AllRequests extends Component {
         super();
         this.state = {
             requests: [],
+            tagValue: "",
+            filteredList: [],
+            filterOn: false,
         };
+        this.filterRequest = this.filterRequest.bind(this);
     }
 
     async componentDidMount() {
@@ -53,6 +57,22 @@ class AllRequests extends Component {
 
     fetchRequests() {
         return axios.get("http://localhost:5000/exam/");
+    }
+
+    filterRequest(event) {
+        const tag = event.target.value;
+        const requestList = this.state.requests;
+        this.setState({ tagValue: tag });
+
+        if (tag) {
+            const filteredList = requestList.filter((currentRequest) => {
+                return tag === currentRequest.tags;
+            });
+            this.setState({ filteredList: filteredList });
+            this.setState({ filterOn: true });
+        } else {
+            this.setState({ filterOn: false });
+        }
     }
 
     render() {
@@ -65,7 +85,7 @@ class AllRequests extends Component {
                     <div className="request-controls">
                         <h1>Available requests</h1>
                         <label htmlFor="search-tag">Search by tag: </label>
-                        <select id="search-tag">
+                        <select id="search-tag" onChange={this.filterRequest} value={this.state.tagValue}>
                             <option value="">Select a tag</option>
                             <option value="Estetiske fag, kunst- og musikkfag">Estetiske fag, kunst- og musikkfag</option>
                             <option value="Fiskeri-, husdyr- og landbruksfag">Fiskeri-, husdyr- og landbruksfag</option>
@@ -87,7 +107,7 @@ class AllRequests extends Component {
                     </div>
 
                     <div className="request-list" id="request-list">
-                        <Requests requests={this.state.requests} />
+                        <Requests requests={this.state.filterOn ? this.state.filteredList : this.state.requests} />
                     </div>
                 </main>
             </div>

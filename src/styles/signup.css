@@ -39,6 +39,12 @@ h1 {
     padding: 8px;
     font-size: 1rem;
 }
+
+.signup-wrapper form p {
+    justify-self: end;
+    padding-top: 10px;
+}
+
 .signup-wrapper a {
     margin-top: 25px;
 }

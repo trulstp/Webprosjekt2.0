@@ -38,12 +38,19 @@ const ManageUsers = ({ addedUsers }) => {
                         <p>Degree: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
+                        <a href={getLink(user._id)} className="btn-admin">
+                            Edit
+                        </a>
                         <button className="btn-admin delete-user">Delete</button>
                     </div>
                 </section>
             ))}
         </div>
     );
+};
+
+const getLink = (id) => {
+    return `edit-profile?id=${id}`;
 };
 
 class Admin extends Component {
@@ -91,9 +98,6 @@ class Admin extends Component {
     }*/
 
     render() {
-        const newUsers = this.state.newUsers;
-        const addedUsers = this.state.addedUsers;
-
         return (
             <div className="wrapper">
                 <div className="to-top">

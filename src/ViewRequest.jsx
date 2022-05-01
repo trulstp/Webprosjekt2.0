@@ -24,6 +24,7 @@ class ViewRequest extends Component {
     async componentDidMount() {
         const id = this.fetchId();
         const response = await this.fetchRequest(id);
+        console.log(response);
         this.setState({
             title: response.data.req[0].title,
             deadline: response.data.req[0].deadline,
@@ -42,10 +43,18 @@ class ViewRequest extends Component {
     }
 
     fetchId() {
-        const queryString = document.location.search;
-        const params = new URLSearchParams(queryString);
-        const id = params.get("id");
+        const query = document.location.search;
+        const parameter = new URLSearchParams(query);
+        const id = parameter.get("id");
         return id;
+    }
+
+    postedDate() {
+        let posted = "";
+        for (let i = 0; i < 10; i++) {
+            posted += this.state.date[i];
+        }
+        return posted;
     }
 
     render() {
@@ -60,7 +69,7 @@ class ViewRequest extends Component {
                         <p>
                             <span className="bold">Author:</span> Name Lastname
                         </p>
-                        <p>Posted: {this.state.date}</p>
+                        <p>Posted: {this.postedDate()}</p>
                         <p>Application deadline: {this.state.deadline}</p>
                         <p>
                             Exam period: {this.state.examStart} - {this.state.examEnd}

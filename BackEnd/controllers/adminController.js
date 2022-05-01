@@ -35,6 +35,7 @@ const register = async (req, res) => {
         email: req.body.email,
         phonenr: req.body.phonenr,
         university: req.body.university,
+        degree: req.body.degree,
         password: req.body.password,
     });
     registeredUser
