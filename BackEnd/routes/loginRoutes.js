@@ -1,11 +1,18 @@
-const { response } = require('express')
-const express = require('express')
-const router = express.Router()
+const { response } = require("express");
+const express = require("express");
+const { getAll, findUser, updateUser } = require("../controllers/userController");
+const router = express.Router();
 
-const {register, login} = require('../controllers/userController')
+const { register, login } = require("../controllers/userController");
 
-router.post('/register', register)
+router.post("/register", register);
 
-router.get('/login', login)
+router.get("/login", login);
 
-module.exports = router
+router.get("/", getAll);
+
+router.get("/:_id", findUser);
+
+router.patch("/:_id", updateUser);
+
+module.exports = router;

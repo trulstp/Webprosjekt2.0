@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./styles/login.css";
 import "./styles/login-media.css";
-import axios from "axios";
 
 class LogIn extends Component {
     constructor() {
@@ -9,6 +9,7 @@ class LogIn extends Component {
         this.state = {
             username: "",
             password: "",
+            requestList: [],
         };
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
@@ -26,17 +27,45 @@ class LogIn extends Component {
         });
     }
 
-    onSubmit(event)  {
-    event.preventDefault()
-    const login = {
-        username: this.state.username,
-        password: this.state.password
+    async componentDidMount() {
+        const response = await this.fetchRequests();
+        this.setState({ requestList: response.data });
     }
-    
-    axios('localhost:5000/app/login', login)
-        
-    
+
+    fetchRequests() {
+        return axios.get("http://localhost:5000/exam/");
     }
+
+    onSubmit(event) {
+        event.preventDefault();
+        const login = {
+            username: this.state.username,
+            password: this.state.password,
+        };
+
+        axios("localhost:5000/app/login", login);
+    }
+
+    checkNumber(type) {
+        const requestList = this.state.requestList;
+        let numberOpen = 0;
+        let numberMatched = 0;
+        requestList.forEach((request) => {
+            if (request.open) {
+                numberOpen++;
+            }
+            if (request.matched) {
+                numberMatched++;
+            }
+        });
+
+        if (type === "open") {
+            return numberOpen;
+        } else if (type === "matched") {
+            return numberMatched;
+        }
+    }
+
     render() {
         return (
             <div className="login-wrapper">
@@ -67,15 +96,18 @@ class LogIn extends Component {
                     <h2>Statistics</h2>
                     <p>
                         <span>Current open requests:</span>
-                        <br />0
+                        <br />
+                        {this.checkNumber("open")}
                     </p>
                     <p>
                         <span>Matched requests:</span>
-                        <br />0
+                        <br />
+                        {this.checkNumber("matched")}
                     </p>
                     <p>
                         <span>Total number of requests:</span>
-                        <br />0
+                        <br />
+                        {this.state.requestList.length}
                     </p>
                 </section>
             </div>

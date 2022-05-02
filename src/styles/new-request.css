@@ -15,15 +15,6 @@ form,
     margin: 5px 0 20px;
     border: 1px solid rgb(39, 39, 39);
     border-radius: 5px;
-}
-
-#request-title,
-#request-deadline,
-#request-exam-start,
-#request-exam-end,
-#request-examiner,
-#request-examination,
-#request-description {
     padding: 8px;
     font-size: 1rem;
 }
