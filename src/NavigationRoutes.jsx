@@ -14,6 +14,7 @@ import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
 import Admin from "./Admin";
 
+
 const NavigationRoutes = () => {
     const SidebarLayout = () => (
         <>
@@ -28,6 +29,8 @@ const NavigationRoutes = () => {
 
                 <Route path="/" element={<LogIn />} exact />
 
+                <Route path="*" element={<NotFound />} /> 
+
                 <Route element={<SidebarLayout />}>
                     <Route path="/all" element={<AllRequests />} />
 
@@ -41,13 +44,20 @@ const NavigationRoutes = () => {
 
                     <Route path="/view-applicants" element={<ViewApplicants />} />
 
-                    <Route path="/view-request" element={<ViewRequest />} />
+                    <Route path="/view-request" element={<ViewRequest />}  />
 
                     <Route path="/admin" element={<Admin />} />
+
+                    
                 </Route>
             </Routes>
         </Router>
     );
+    
 };
+
+const NotFound = () => {
+    return (<div><h1>This page does not exist</h1></div>);
+}
 
 export default NavigationRoutes;

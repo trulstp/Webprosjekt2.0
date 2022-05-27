@@ -1,13 +1,12 @@
 const { response } = require("express");
 const express = require("express");
-const { getAll, findUser, updateUser } = require("../controllers/userController");
+const { check } = require('express-validator')
+const { getAll, findUser, updateUser, register, login } = require("../controllers/userController");
 const router = express.Router();
-
-const { register, login } = require("../controllers/userController");
 
 router.post("/register", register);
 
-router.get("/login", login);
+router.post("/login", login);
 
 router.get("/", getAll);
 
