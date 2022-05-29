@@ -99,7 +99,7 @@ class SignUp extends Component {
                     <label htmlFor="input-university">University*</label>
                     <input type="text" id="input-university" onChange={this.changeUniversity} value={this.state.university} required />
 
-                    <label htmlFor="input-education">Education level*</label>
+                    <label htmlFor="input-education">Title*</label>
                     <input type="text" id="input-education" onChange={this.changeEducation} value={this.state.education} required />
 
                     <label htmlFor="input-password">Create password*</label>

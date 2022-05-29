@@ -14,11 +14,15 @@ const AddUsers = ({ newUsers }) => {
                         <h2>{user.name}</h2>
                         <p>Email: {user.email}</p>
                         <p>University: {user.university}</p>
-                        <p>Degree: {user.degree}</p>
+                        <p>Title: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
-                        <button className="btn-admin">Accept</button>
-                        <button className="btn-admin delete-user">Reject</button>
+                        <button className="btn-admin" onClick={() => acceptUser(user._id)}>
+                            Accept
+                        </button>
+                        <button className="btn-admin delete-user" onClick={() => rejectUser(user._id)}>
+                            Reject
+                        </button>
                     </div>
                 </section>
             ))}
@@ -35,13 +39,15 @@ const ManageUsers = ({ addedUsers }) => {
                         <h2>{user.name}</h2>
                         <p>Email: {user.email}</p>
                         <p>University: {user.university}</p>
-                        <p>Degree: {user.degree}</p>
+                        <p>Title: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
                         <a href={getLink(user._id)} className="btn-admin">
                             Edit
                         </a>
-                        <button className="btn-admin delete-user">Delete</button>
+                        <button className="btn-admin delete-user" onClick={() => deleteUser(user._id)}>
+                            Delete
+                        </button>
                     </div>
                 </section>
             ))}
@@ -51,6 +57,35 @@ const ManageUsers = ({ addedUsers }) => {
 
 const getLink = (id) => {
     return `edit-profile?id=${id}`;
+};
+
+const acceptUser = (id) => {
+    axios
+        .get(`http://localhost:5000/admin/${id}`)
+        .then((response) => {
+            const user = {
+                name: response.data.user[0].name,
+                email: response.data.user[0].email,
+                phonenr: response.data.user[0].phonenr,
+                university: response.data.user[0].university,
+                degree: response.data.user[0].degree,
+                password: response.data.user[0].password,
+            };
+            console.log(user);
+            return user;
+        })
+        .then((response) => {
+            console.log(response);
+            axios.post("http://localhost:5000/app/", response);
+        });
+};
+
+const rejectUser = (id) => {
+    axios.delete(`http://localhost:5000/admin/${id}`).then((response) => console.log(response.data));
+};
+
+const deleteUser = (id) => {
+    axios.delete(`http://localhost:5000/app/${id}`).then((response) => console.log(response.data));
 };
 
 class Admin extends Component {
@@ -78,24 +113,6 @@ class Admin extends Component {
     fetchUsers() {
         return axios.get("http://localhost:5000/app/");
     }
-
-    /*manageUsers() {
-        return (
-            <div className="new-user-wrapper">
-                <section className="new-user">
-                    <div className="new-user-details">
-                        <h2>Full name</h2>
-                        <p>Email: </p>
-                        <p>University: </p>
-                        <p>Degree: </p>
-                    </div>
-                    <div className="btn-admin-wrapper">
-                        <button className="btn-admin delete-user">Delete</button>
-                    </div>
-                </section>
-            </div>
-        );
-    }*/
 
     render() {
         return (

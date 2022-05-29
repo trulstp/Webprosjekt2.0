@@ -1,7 +1,6 @@
 const adminSchema = require("../models/adminSchema");
 const { validationResult } = require("express-validator");
 
-
 //handle errors
 const handleErrors = (err) => {
     console.log(err.message, err.code);
@@ -64,7 +63,26 @@ const getAll = async (request, response) => {
     }
 };
 
+const findUser = async (request, response) => {
+    try {
+        const user = await adminSchema.find({ _id: request.params._id });
+        response.status(200).json({ user });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
+const deleteOne = async (request, response) => {
+    try {
+        await adminSchema.remove({ _id: request.params._id });
+    } catch (err) {
+        response.json({ message: err });
+    }
+};
+
 module.exports = {
     register,
     getAll,
+    findUser,
+    deleteOne,
 };
