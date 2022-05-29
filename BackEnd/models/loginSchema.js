@@ -32,6 +32,10 @@ const loginSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    role:{
+        type: String,
+        required:true
+    },
     date: {
         type: Date,
         default: Date.now,

@@ -22,12 +22,6 @@ const handleErrors = (err) => {
     }
     return errors;
 };
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, "secret123", {
-        expiresIn: maxAge,
-    });
-};
 
 const register = async (req, res) => {
     const registeredUser = new loginSchema({
@@ -38,6 +32,7 @@ const register = async (req, res) => {
         degree: req.body.degree,
         password: req.body.password,
         description: "",
+        role:'Basic'
     });
     registeredUser
         .save()
@@ -51,17 +46,28 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
+        })
+    }
     const user = await loginSchema.findOne({
-        email: req.body.email,
+        email: req.body.email
     });
     if (!user) {
-        return { status: "error", error: "Invalid login" };
+        return res.status(401).send('user doesnt exist');
     }
+    console.log('found user')
     const isPassValid = await bcrypt.compare(req.body.password, user.password);
     if (isPassValid) {
-        const token = createToken(user._id);
-        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(201).json({ status: "ok", user: user._id });
+        const token = jwt.sign(
+            {id: user.id, name: user.name, role: user.role},
+            process.env.ACCESS_TOKEN, {
+                expiresIn: 3600,
+            }
+            );
+        res.header("auth", token).send(token);
     } else {
         return res.json({ status: "error", user: false });
     }

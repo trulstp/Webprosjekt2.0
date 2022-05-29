@@ -5,6 +5,8 @@ import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
 import LogoutIcon from "./icons/logout.png";
 
+
+
 class Navigation extends Component {
     render() {
         return (
@@ -39,7 +41,7 @@ class Navigation extends Component {
 
                 <div>
                     <a href="/" className="link">
-                        <img src={LogoutIcon} alt="Log out" />
+                        <img src={LogoutIcon} alt="Log out" sessionStorage/>
                         Log out
                     </a>
                 </div>

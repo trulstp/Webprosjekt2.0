@@ -1,8 +1,5 @@
 const adminSchema = require("../models/adminSchema");
-const jwt = require("jsonwebtoken");
-const { check, validationResult } = require("express-validator");
-const bcrypt = require("bcrypt");
-const { response } = require("express");
+const { validationResult } = require("express-validator");
 
 //handle errors
 const handleErrors = (err) => {
@@ -23,14 +20,21 @@ const handleErrors = (err) => {
     }
     return errors;
 };
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, "secret123", {
-        expiresIn: maxAge,
-    });
-};
 
+
+
+//* registers the user to the database where the admin will be able to admit or reject you to being able to log in
 const register = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
+        })
+    }
+    const emailExist = await adminSchema.findOne({email:req.body.email})
+    if(emailExist){
+        return res.status(400).send('email already exists')
+    }
     const registeredUser = new adminSchema({
         name: req.body.name,
         email: req.body.email,

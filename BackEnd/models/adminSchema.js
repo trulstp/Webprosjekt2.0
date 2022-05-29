@@ -29,6 +29,11 @@ const adminSchema = new mongoose.Schema({
         required: [true, "Please enter a password"],
         minlength: [6, "Minimum length is 6 characters"],
     },
+    role:{
+        type: String,
+        required:true,
+        default: "basic"
+    },
     date: {
         type: Date,
         default: Date.now,
@@ -36,7 +41,7 @@ const adminSchema = new mongoose.Schema({
 });
 
 adminSchema.pre("save", async function (next) {
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });

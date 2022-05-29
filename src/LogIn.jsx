@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import jwt_decode from 'jwt-decode'
 import "./styles/login.css";
 import "./styles/login-media.css";
 
@@ -7,17 +8,18 @@ class LogIn extends Component {
     constructor() {
         super();
         this.state = {
-            username: "",
+            email: "",
             password: "",
             requestList: [],
         };
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     changeEmail(event) {
         this.setState({
-            username: event.target.value,
+            email: event.target.value,
         });
     }
 
@@ -38,12 +40,31 @@ class LogIn extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const login = {
-            username: this.state.username,
-            password: this.state.password,
-        };
 
-        axios("localhost:5000/app/login", login);
+        
+        const login = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        
+
+        axios.post("http://localhost:5000/app/login", login).then(res =>{
+
+            let token = res.data;
+            let decodedToken = jwt_decode(token)
+            console.log(decodedToken.role)
+            sessionStorage.setItem("role", decodedToken.role);
+            sessionStorage.setItem("id", decodedToken.id);
+            sessionStorage.setItem("name", decodedToken.name);
+        })
+
+
+        this.setState({
+            email: "",
+            password: ""
+        });
+        let test = sessionStorage.getItem("token");
+        console.log(test);
     }
 
     checkNumber(type) {
@@ -75,7 +96,7 @@ class LogIn extends Component {
                     <h2>Log in</h2>
                     <form onSubmit={this.onSubmit}>
                         <label htmlFor="input-email">Email</label>
-                        <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.username} className="input-field" />
+                        <input type="text" id="input-email" onChange={this.changeEmail} value={this.state.email} className="input-field" />
 
                         <label htmlFor="input-password">Password</label>
                         <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} className="input-field" />

@@ -1,47 +1,28 @@
 const jwt = require('jsonwebtoken');
+const loginSchema = require('jsonwebtoken')
 
-const requireAuth = (req, res, next) => {
-
-    const token = req.cookies.jwt;
-    
-    //check json web token exists and is verified
-    if(token) {
-        jwt.verify(token, 'secret123', (err, decodedToken) => {
-          if(err) {
-              console.log(err.message);
-              res.redirect('/login')
-          } else {
-              console.log(decodedToken);
-              next()
-          }    
-        })
+const auth = async (req,res,next) => {
+    const token = req.header('auth')
+    if(!token){
+        return res.status(401).send('Access denied')
     }
-    else {
-        res.redirect('/login')
+    try{
+        const verified = jwt.verify(token,process.env.ACCESS_TOKEN)
+        req.user = verified;
+        next()
+    }catch(err){
+        res.status(400).send('Invalid token')
     }
 }
 
-// check current user
-const checkUser = (req, res, next) => {
-    const token = req.cookies.jwt;
-    if(token) {
-        jwt.verify(token, 'secret123', async (err, decodedToken) => {
-            if(err) {
-                console.log(err.message);
-                res.locals.user = null;
-                next()
-            } else {
-                console.log(decodedToken);
-                let user = await User.findById(decodedToken.id)
-                res.locals.user = user;-
-                next()
-            }    
-          })
-    }
-    else {
-        res.locals.user = null;
-        next();
+function authRole(role) {
+    return (req,res,next) => {
+        if(req.user.role !== role){
+            res.status(401)
+            return res.send('you have no permission')
+        }
+        next()
     }
 }
 
-module.exports =  { requireAuth, checkUser };
+module.exports = {auth, authRole};
