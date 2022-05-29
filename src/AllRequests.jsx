@@ -79,12 +79,12 @@ class AllRequests extends Component {
         return (
             <div className="wrapper">
                 <div className="to-top">
-                    <a href="#top">Top of page</a>
+                    <a href="#top">To top of page</a>
                 </div>
                 <main className="data-request">
                     <div className="request-controls">
                         <h1>Available requests</h1>
-                        <label htmlFor="search-tag">Search by tag: </label>
+                        <label htmlFor="search-tag">Filter by tag: </label>
                         <select id="search-tag" onChange={this.filterRequest} value={this.state.tagValue}>
                             <option value="">Select a tag</option>
                             <option value="Estetiske fag, kunst- og musikkfag">Estetiske fag, kunst- og musikkfag</option>

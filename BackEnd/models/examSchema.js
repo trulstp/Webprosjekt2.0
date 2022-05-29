@@ -61,7 +61,10 @@ const examSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    Applicants: {
+    applicants: {
+        type: Array,
+    },
+    acceptedApplicant: {
         type: String,
     },
     date: {

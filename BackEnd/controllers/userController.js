@@ -88,12 +88,20 @@ const findUser = async (request, response) => {
 const updateUser = async (request, response) => {
     try {
         const _id = request.params;
-        const updateUser = await examSchema.findOneAndUpdate(_id, request.body, {
+        const updateUser = await loginSchema.findOneAndUpdate(_id, request.body, {
             new: true,
         });
         response.send(updateUser);
     } catch (e) {
         response.status(404).send(e);
+    }
+};
+
+const deleteOne = async (request, response) => {
+    try {
+        await loginSchema.remove({ _id: request.params._id });
+    } catch (err) {
+        response.json({ message: err });
     }
 };
 
@@ -103,4 +111,5 @@ module.exports = {
     getAll,
     findUser,
     updateUser,
+    deleteOne,
 };

@@ -2,6 +2,7 @@ const adminSchema = require("../models/adminSchema");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const { response } = require("express");
 
 //handle errors
 const handleErrors = (err) => {
@@ -58,7 +59,26 @@ const getAll = async (request, response) => {
     }
 };
 
+const findUser = async (request, response) => {
+    try {
+        const user = await adminSchema.find({ _id: request.params._id });
+        response.status(200).json({ user });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
+const deleteOne = async (request, response) => {
+    try {
+        await adminSchema.remove({ _id: request.params._id });
+    } catch (err) {
+        response.json({ message: err });
+    }
+};
+
 module.exports = {
     register,
     getAll,
+    findUser,
+    deleteOne,
 };

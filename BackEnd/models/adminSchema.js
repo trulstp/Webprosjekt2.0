@@ -15,9 +15,11 @@ const adminSchema = new mongoose.Schema({
     },
     university: {
         type: String,
+        required: true,
     },
     degree: {
         type: String,
+        required: true,
     },
     phonenr: {
         type: Number,

@@ -17,7 +17,7 @@ const ShowRequests = ({ requestList }) => {
                             Exam period: {currentRequest.examStart} - {currentRequest.examEnd}
                         </p>
                         <p>
-                            <span className="bold">Minimum education for examiner:</span> {currentRequest.minEdu}
+                            <span className="bold">Level of examination:</span> {currentRequest.examLvl}
                         </p>
                         <ul>
                             <li>{currentRequest.tags}</li>
