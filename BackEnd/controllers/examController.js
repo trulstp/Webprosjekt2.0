@@ -10,14 +10,9 @@ const findTag = async (request, response) => {
     }
 };
 
-/*const getAll = async (request, response) =>{
-   try{ 
-        const showExams = await examSchema.find().select(['-description', '-Applicants', 'minEdu']);
-        return response.json(showExams)
-   } catch(error) {
-        return response.json({message:error})
-   }  
-}*/
+const getStat = (request, response) => {
+    examSchema.find({}, {_id: 0, title: 0, deadline: 0, examStart: 0, examEnd: 0, tags: 0, minEdu: 0, examLvl: 0, description: 0, date: 0, __v: 0}).then((showExams) => response.json(showExams));
+};
 
 const getAll = (request, response) => {
     examSchema.find().then((showExams) => response.json(showExams));
@@ -83,4 +78,5 @@ module.exports = {
     getAll,
     updateExam,
     findExam,
+    getStat,
 };
