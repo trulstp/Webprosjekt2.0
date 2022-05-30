@@ -1,5 +1,5 @@
 const examSchema = require("../models/examSchema");
-const auth = require('../middleware/authMiddleware')
+const auth = require("../middleware/authMiddleware");
 
 const findTag = async (request, response) => {
     try {
@@ -29,6 +29,7 @@ const findExam = async (request, response) => {
 
 const registerExam = (request, response) => {
     const registeredExam = new examSchema({
+        author: request.body.author,
         title: request.body.title,
         deadline: request.body.deadline,
         examStart: request.body.examStart,
