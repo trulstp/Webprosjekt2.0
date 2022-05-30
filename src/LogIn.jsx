@@ -35,7 +35,7 @@ class LogIn extends Component {
     }
 
     fetchRequests() {
-        return axios.get("http://localhost:5000/exam/");
+        return axios.get("http://localhost:5000/exam/stat");
     }
 
     onSubmit(event) {
