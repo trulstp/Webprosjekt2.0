@@ -89,6 +89,7 @@ class NewRequest extends Component {
         console.log(this.state.tags);
 
         const request = {
+            author: sessionStorage.getItem("id"),
             title: this.state.title,
             deadline: this.state.deadline,
             examStart: this.state.examStart,

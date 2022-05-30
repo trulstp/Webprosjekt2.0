@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom
 //import Template from "./Template";
 import AllRequests from "./AllRequests";
 import NewRequest from "./NewRequest";
-import Profile from "./Profile";
+import MyProfile from "./MyProfile";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
 import ViewRequest from "./ViewRequest";
@@ -13,7 +13,6 @@ import Navigation from "./Navigation";
 import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
 import Admin from "./Admin";
-
 
 const NavigationRoutes = () => {
     const SidebarLayout = () => (
@@ -29,12 +28,12 @@ const NavigationRoutes = () => {
 
                 <Route path="/" element={<LogIn />} exact />
 
-                <Route path="*" element={<NotFound />} /> 
+                <Route path="*" element={<NotFound />} />
 
                 <Route element={<SidebarLayout />}>
                     <Route path="/all" element={<AllRequests />} />
 
-                    <Route path="/my-profile" element={<Profile />} />
+                    <Route path="/my-profile" element={<MyProfile />} />
 
                     <Route path="/edit-profile" element={<EditProfile />} />
 
@@ -44,20 +43,21 @@ const NavigationRoutes = () => {
 
                     <Route path="/view-applicants" element={<ViewApplicants />} />
 
-                    <Route path="/view-request" element={<ViewRequest />}  />
+                    <Route path="/view-request" element={<ViewRequest />} />
 
                     <Route path="/admin" element={<Admin />} />
-
-                    
                 </Route>
             </Routes>
         </Router>
     );
-    
 };
 
 const NotFound = () => {
-    return (<div><h1>This page does not exist</h1></div>);
-}
+    return (
+        <div>
+            <h1>This page does not exist</h1>
+        </div>
+    );
+};
 
 export default NavigationRoutes;
