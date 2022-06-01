@@ -16,9 +16,11 @@ class ViewApplicants extends Component {
                     <div className="applicant-list">
                         <section>
                             <div className="applicant-details">
-                                <h2>Full name</h2>
-                                <p>University</p>
-                                <p>Education level</p>
+                                <h2>
+                                    <a href="profile?id=6294fa3ecd5bd256d96352a8">Testing test</a>
+                                </h2>
+                                <p>University: NTNU</p>
+                                <p>Education level: prof</p>
                             </div>
                             <div className="accept-applicant">
                                 <button className="btn-applicant">Accept applicant</button>

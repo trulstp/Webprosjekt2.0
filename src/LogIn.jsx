@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 import "./styles/login.css";
 import "./styles/login-media.css";
 
@@ -41,27 +41,23 @@ class LogIn extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        
         const login = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
         };
-        
 
-        axios.post("http://localhost:5000/app/login", login).then(res =>{
-
+        axios.post("http://localhost:5000/app/login", login).then((res) => {
             let token = res.data;
-            let decodedToken = jwt_decode(token)
-            console.log(decodedToken.role)
+            let decodedToken = jwt_decode(token);
+            console.log(decodedToken.role);
             sessionStorage.setItem("role", decodedToken.role);
             sessionStorage.setItem("id", decodedToken.id);
             sessionStorage.setItem("name", decodedToken.name);
-        })
-
+        });
 
         this.setState({
             email: "",
-            password: ""
+            password: "",
         });
         let test = sessionStorage.getItem("token");
         console.log(test);

@@ -18,7 +18,11 @@ class ViewRequest extends Component {
             examLvl: "",
             description: "",
             date: "",
+
+            alreadyApplied: "",
         };
+
+        this.applyUser = this.applyUser.bind(this);
     }
 
     async componentDidMount() {
@@ -57,6 +61,30 @@ class ViewRequest extends Component {
         return posted;
     }
 
+    async applyUser() {
+        const requestId = this.fetchId();
+        const request = await this.fetchRequest(requestId);
+        const applicants = request.data.req[0].applicants;
+        const id = sessionStorage.getItem("id");
+
+        //Checks if user has already applied
+        const alreadyApplied = applicants.find((applicant) => applicant === id);
+
+        if (!alreadyApplied) {
+            applicants.push(id);
+
+            const updatedApplicantList = {
+                applicants: applicants,
+            };
+
+            axios.patch(`http://localhost:5000/exam/${requestId}`, updatedApplicantList);
+        } else {
+            this.setState({
+                alreadyApplied: "You have already applied.",
+            });
+        }
+    }
+
     render() {
         return (
             <div className="wrapper">
@@ -91,8 +119,16 @@ class ViewRequest extends Component {
                     <p>{this.state.description}</p>
 
                     <div className="btn-wrapper">
-                        <button className="apply">Apply as second examiner</button>
+                        <button
+                            className="apply"
+                            onClick={() => {
+                                this.applyUser();
+                            }}
+                        >
+                            Apply as second examiner
+                        </button>
                     </div>
+                    <p>{this.state.alreadyApplied}</p>
                 </main>
             </div>
         );

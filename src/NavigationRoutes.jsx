@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom
 import AllRequests from "./AllRequests";
 import NewRequest from "./NewRequest";
 import MyProfile from "./MyProfile";
+import Profile from "./Profile";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
 import ViewRequest from "./ViewRequest";
@@ -34,6 +35,8 @@ const NavigationRoutes = () => {
                     <Route path="/all" element={<AllRequests />} />
 
                     <Route path="/my-profile" element={<MyProfile />} />
+
+                    <Route path="/profile" element={<Profile />} />
 
                     <Route path="/edit-profile" element={<EditProfile />} />
 

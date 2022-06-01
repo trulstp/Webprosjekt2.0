@@ -24,8 +24,7 @@ const ShowRequests = ({ requestList }) => {
                         </ul>
                     </div>
                     <div className="profile-request-controls">
-                        <a href="/view-applicants">View applicants</a>
-                        <a href={getLink(currentRequest._id)}>Edit request</a>
+                        <a href={getLink(currentRequest._id)}>View request</a>
                     </div>
                 </section>
             ))}
@@ -34,7 +33,7 @@ const ShowRequests = ({ requestList }) => {
 };
 
 const getLink = (id) => {
-    return `edit-request?id=${id}`;
+    return `view-request?id=${id}`;
 };
 
 class Profile extends Component {
@@ -43,12 +42,27 @@ class Profile extends Component {
         this.state = {
             requestList: [],
             requestActive: true,
+
+            name: "Name",
+            description: "",
+            university: "",
+            degree: "",
         };
     }
 
     async componentDidMount() {
-        const response = await this.fetchRequests();
-        this.setState({ requestList: response.data });
+        const requestResponse = await this.fetchRequests();
+        this.setState({ requestList: requestResponse.data });
+
+        const id = this.fetchId();
+        const profileResponse = await this.fetchProfile(id);
+        console.log(profileResponse);
+        this.setState({
+            name: profileResponse.data.user[0].name,
+            description: profileResponse.data.user[0].description,
+            university: profileResponse.data.user[0].university,
+            degree: profileResponse.data.user[0].degree,
+        });
     }
 
     fetchRequests() {
@@ -77,6 +91,17 @@ class Profile extends Component {
         );
     }
 
+    fetchProfile(id) {
+        return axios.get(`http://localhost:5000/admin/${id}`);
+    }
+
+    fetchId() {
+        const query = document.location.search;
+        const parameter = new URLSearchParams(query);
+        const id = parameter.get("id");
+        return id;
+    }
+
     render() {
         const showHistory = this.showHistory();
 
@@ -86,20 +111,13 @@ class Profile extends Component {
                     <a href="#top">Top of page</a>
                 </div>
                 <main className="data">
-                    <h1>Name Lastname</h1>
+                    <h1>{this.state.name}</h1>
                     <section>
+                        <p>Univeristy: {this.state.university}</p>
+                        <p>Degree: {this.state.degree}</p>
                         <h2>Description</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est massa sit imperdiet pharetra viverra. Augue porta enim sit vulputate adipiscing vel, non commodo.
-                            Sollicitudin morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat urna dictum faucibus tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Nunc est massa sit imperdiet pharetra viverra. Augue porta enim sit vulputate adipiscing vel, non commodo. Sollicitudin morbi sed quis accumsan et cursus purus. Quam
-                            sollicitudin arcu feugiat urna dictum faucibus tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est massa sit imperdiet pharetra viverra. Augue
-                            porta enim sit vulputate adipiscing vel, non commodo. Sollicitudin morbi sed quis accumsan et cursus purus. Quam sollicitudin arcu feugiat urna dictum faucibus tincidunt.
-                        </p>
-
-                        <a href="/edit-profile" className="edit-profile">
-                            Edit profile
-                        </a>
+                        <p>{this.state.description}</p>
+                        <br />
                     </section>
 
                     <div>
