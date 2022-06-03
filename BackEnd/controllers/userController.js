@@ -124,7 +124,7 @@ const updateUser = async (request, response) => {
 const verifyUser = async (req,res) => {
     try{
         const user = await loginSchema.findByIdAndUpdate(
-            { _id: req.params.id },
+            { _id: req.params._id },
             {
                 verified: true
             }
