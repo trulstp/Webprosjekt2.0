@@ -111,7 +111,7 @@ const findUser = async (request, response) => {
 const updateUser = async (request, response) => {
     try {
         const _id = request.params;
-        const updateUser = await examSchema.findOneAndUpdate(_id, request.body, {
+        const updateUser = await loginSchema.findOneAndUpdate(_id, request.body, {
             new: true,
         });
         response.send(updateUser);
@@ -119,6 +119,7 @@ const updateUser = async (request, response) => {
         response.status(404).send(e);
     }
 };
+
 
 const verifyUser = async (req,res) => {
     try{
@@ -135,16 +136,14 @@ const verifyUser = async (req,res) => {
     }
 };
 
-const deleteUser = async (req, res) => {
+
+const deleteOne = async (request, response) => {
     try {
-        const user = await loginSchema.findOne({ _id: req.params.id });
-        await user.delete();
-        res.json(user);
-    } catch(error) {
-        console.log(error.message);
-        res.status(404).json("Id not found");
+        await loginSchema.remove({ _id: request.params._id });
+    } catch (err) {
+        response.json({ message: err });
     }
-}
+};
 
 module.exports = {
     register,
@@ -153,6 +152,6 @@ module.exports = {
     findUser,
     updateUser,
     verifyUser,
-    deleteUser,
-    getUnverified
+    getUnverified,
+    deleteOne,
 };

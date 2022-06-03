@@ -33,6 +33,13 @@ class Navigation extends Component {
                 </div>
 
                 <div>
+                    <a href="/admin" className="link" id="my-profile-link">
+                        <img src={ProfileIcon} alt="Admin" />
+                        Administrate
+                    </a>
+                </div>
+
+                <div>
                     <a href="/" className="link">
                         <img src={LogoutIcon} alt="Log out" sessionStorage/>
                         Log out

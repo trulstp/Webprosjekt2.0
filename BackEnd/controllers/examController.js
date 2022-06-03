@@ -10,11 +10,14 @@ const findTag = async (request, response) => {
 };
 
 const getStat = (request, response) => {
-    examSchema.find({}, {_id: 0, title: 0, deadline: 0, examStart: 0, examEnd: 0, tags: 0, minEdu: 0, examLvl: 0, description: 0, date: 0, __v: 0}).then((showExams) => response.json(showExams));
+    examSchema.find({}, { _id: 0, title: 0, deadline: 0, examStart: 0, examEnd: 0, tags: 0, minEdu: 0, examLvl: 0, description: 0, date: 0, __v: 0 }).then((showExams) => response.json(showExams));
 };
 
 const getAll = (request, response) => {
-    examSchema.find().then((showExams) => response.json(showExams));
+    examSchema
+        .find()
+        .sort({ deadline: 1 })
+        .then((showExams) => response.json(showExams));
 };
 
 const findExam = async (request, response) => {
@@ -26,8 +29,18 @@ const findExam = async (request, response) => {
     }
 };
 
+const findExamAuthor = async (request, response) => {
+    try {
+        const req = await examSchema.find({ author: request.params.author });
+        response.status(200).json({ req });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
 const registerExam = (request, response) => {
     const registeredExam = new examSchema({
+        author: request.body.author,
         title: request.body.title,
         deadline: request.body.deadline,
         examStart: request.body.examStart,
@@ -76,5 +89,6 @@ module.exports = {
     getAll,
     updateExam,
     findExam,
+    findExamAuthor,
     getStat,
 };

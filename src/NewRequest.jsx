@@ -18,6 +18,8 @@ class NewRequest extends Component {
             minEdu: "",
             examLvl: "",
             description: "",
+
+            feedback: "",
         };
         this.changeTitle = this.changeTitle.bind(this);
         this.changeDeadline = this.changeDeadline.bind(this);
@@ -84,11 +86,8 @@ class NewRequest extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        console.log(this.state.examEnd);
-
-        console.log(this.state.tags);
-
         const request = {
+            author: sessionStorage.getItem("id"),
             title: this.state.title,
             deadline: this.state.deadline,
             examStart: this.state.examStart,
@@ -112,7 +111,9 @@ class NewRequest extends Component {
             description: "",
         });
 
-        alert("Request posted");
+        this.setState({
+            feedback: "New request submitted",
+        });
         //window.location.href = "/all";
     }
 
@@ -171,6 +172,7 @@ class NewRequest extends Component {
                         <label htmlFor="request-description">Description</label>
                         <textarea id="request-description" onChange={this.changeDescription} value={this.state.description} placeholder="Your description here..." required />
 
+                        <p className="submit-feedback">{this.state.feedback}</p>
                         <input type="submit" className="btn-submit" value="Create request" />
                     </form>
                 </main>

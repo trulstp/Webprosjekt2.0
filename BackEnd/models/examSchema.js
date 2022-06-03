@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const examSchema = new mongoose.Schema({
+    author: {
+        type: String,
+        required: true,
+    },
+
     title: {
         type: String,
         required: true,
@@ -61,8 +66,11 @@ const examSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    Applicants: {
+    applicants: {
         type: Array,
+    },
+    acceptedApplicant: {
+        type: String,
     },
     date: {
         type: Date,

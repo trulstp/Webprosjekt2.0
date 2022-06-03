@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom
 //import Template from "./Template";
 import AllRequests from "./AllRequests";
 import NewRequest from "./NewRequest";
+import MyProfile from "./MyProfile";
 import Profile from "./Profile";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
@@ -14,7 +15,6 @@ import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
 import Admin from "./Admin";
 import ProtectedRoutes from "./utils/protectedUserRoute";
-
 
 const NavigationRoutes = () => {
     const SidebarLayout = () => (
@@ -35,7 +35,9 @@ const NavigationRoutes = () => {
                 <Route element={<SidebarLayout />}>
                     <Route path="/all" element={<AllRequests />} />
 
-                    <Route path="/my-profile" element={<Profile />} />
+                    <Route path="/my-profile" element={<MyProfile />} />
+
+                    <Route path="/profile" element={<Profile />} />
 
                     <Route path="/edit-profile" element={<EditProfile />} />
 
@@ -45,21 +47,22 @@ const NavigationRoutes = () => {
 
                     <Route path="/view-applicants" element={<ViewApplicants />} />
 
-                    <Route path="/view-request" element={<ViewRequest />}  />
+                    <Route path="/view-request" element={<ViewRequest />} />
 
                     <Route path="/admin" element={<Admin />} />
-
-                    
                 </Route>
                 </Route>
             </Routes>
         </Router>
     );
-    
 };
 
 const NotFound = () => {
-    return (<div><h1>This page does not exist</h1></div>);
-}
+    return (
+        <div>
+            <h1>This page does not exist</h1>
+        </div>
+    );
+};
 
 export default NavigationRoutes;

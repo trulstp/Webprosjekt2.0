@@ -25,7 +25,8 @@ const ShowRequests = ({ requestList }) => {
                             </ul>
                         </div>
                         <div className="profile-request-controls">
-                            <a href={getLink(currentRequest._id)}>View request</a>
+                            <a href={getLinkApplicants(currentRequest._id)}>View applicants</a>
+                            <a href={getLinkEdit(currentRequest._id)}>Edit request</a>
                         </div>
                     </section>
                 ))}
@@ -35,48 +36,54 @@ const ShowRequests = ({ requestList }) => {
         return (
             <div>
                 <section className="profile-request">
-                    <p>The user has not posted any requests.</p>
+                    <p>You have not posted any requests.</p>
                 </section>
             </div>
         );
     }
 };
 
-const getLink = (id) => {
-    return `view-request?id=${id}`;
+const getLinkApplicants = (id) => {
+    return `view-applicants?id=${id}`;
+};
+
+const getLinkEdit = (id) => {
+    return `edit-request?id=${id}`;
 };
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
+            name: "",
+            description: "",
             requestList: [],
             requestActive: true,
-
-            name: "Name",
-            description: "",
-            university: "",
-            degree: "",
         };
     }
 
     async componentDidMount() {
-        const id = this.fetchId();
-        const requestResponse = await this.fetchRequests(id);
-        this.setState({ requestList: requestResponse.data.req });
-
+        const id = sessionStorage.getItem("id");
         const profileResponse = await this.fetchProfile(id);
-        console.log(profileResponse);
         this.setState({
             name: profileResponse.data.user[0].name,
             description: profileResponse.data.user[0].description,
-            university: profileResponse.data.user[0].university,
-            degree: profileResponse.data.user[0].degree,
         });
+
+        const requestResponse = await this.fetchRequests(id);
+        this.setState({ requestList: requestResponse.data.req });
+    }
+
+    fetchProfile(id) {
+        return axios.get(`http://localhost:5000/admin/${id}`);
     }
 
     fetchRequests(id) {
         return axios.get(`http://localhost:5000/exam/author/${id}`);
+    }
+
+    getLink(id) {
+        return `/edit-profile?id=${id}`;
     }
 
     showHistory() {
@@ -101,17 +108,6 @@ class Profile extends Component {
         );
     }
 
-    fetchProfile(id) {
-        return axios.get(`http://localhost:5000/admin/${id}`);
-    }
-
-    fetchId() {
-        const query = document.location.search;
-        const parameter = new URLSearchParams(query);
-        const id = parameter.get("id");
-        return id;
-    }
-
     render() {
         const showHistory = this.showHistory();
 
@@ -123,11 +119,12 @@ class Profile extends Component {
                 <main className="data">
                     <h1>{this.state.name}</h1>
                     <section>
-                        <p>Univeristy: {this.state.university}</p>
-                        <p>Degree: {this.state.degree}</p>
                         <h2>Description</h2>
                         <p>{this.state.description}</p>
-                        <br />
+
+                        <a href={this.getLink(sessionStorage.getItem("id"))} className="edit-profile">
+                            Edit profile
+                        </a>
                     </section>
 
                     <div>

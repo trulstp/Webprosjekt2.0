@@ -1,7 +1,8 @@
 const { response } = require("express");
 const express = require("express");
 const router = express.Router();
-const { deleteExam, registerExam, findTag, getAll, updateExam, findExam, getStat } = require("../controllers/examController");
+const { auth, authRole } = require("../middleware/authMiddleware");
+const { deleteExam, registerExam, findTag, getAll, updateExam, findExam, getStat, findExamAuthor } = require("../controllers/examController");
 
 router.post("/", registerExam);
 
@@ -17,6 +18,6 @@ router.patch("/:_id", updateExam);
 
 router.get("/:_id", findExam);
 
-
+router.get("/author/:author", findExamAuthor);
 
 module.exports = router;

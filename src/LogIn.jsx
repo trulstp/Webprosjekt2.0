@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 import "./styles/login.css";
 import "./styles/login-media.css";
 
@@ -47,18 +47,15 @@ class LogIn extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        
         const login = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
         };
-        
 
-        axios.post("http://localhost:5000/app/login", login).then(res =>{
-
+        axios.post("http://localhost:5000/app/login", login).then((res) => {
             let token = res.data;
-            let decodedToken = jwt_decode(token)
-            console.log(decodedToken.role)
+            let decodedToken = jwt_decode(token);
+            console.log(decodedToken.role);
             sessionStorage.setItem("role", decodedToken.role);
             sessionStorage.setItem("verified", decodedToken.verified);
             sessionStorage.setItem("id", decodedToken.id);
@@ -70,7 +67,7 @@ class LogIn extends Component {
 
         this.setState({
             email: "",
-            password: ""
+            password: "",
         });
 
         if(sessionStorage.getItem("verified") === true){
@@ -119,12 +116,20 @@ class LogIn extends Component {
                     </form>
                 </section>
 
-                <section className="information">
+                <section className="login-information">
                     <h2>Information about the project</h2>
-                    <p>This project is for IDG2671. The purpose of this site is to make it easy for teachers to find extra examiners.</p>
+                    <p>
+                        The purpose of this site is to make it easy for teachers to find extra examiners for upcoming exams. Teachers can post requests for examiners and apply as a second examiner.
+                        All users must be accepted by an admin, before being able to access the site. This site is only for teachers.
+                    </p>
+                    <p>
+                        This project is a course project for IDG2671-Webprosjekt. The group working on this project consists of Marie Holme Kjær and Truls Teige Pettersen. Both are in their 2nd year
+                        of the Webutvikling bachelor programme.
+                    </p>
+                    <p>The website was built using the MERN codestack and is a single page application. The site works on mobile, tablet and desktop.</p>
                 </section>
 
-                <section className="statistics">
+                <section className="login-statistics">
                     <h2>Statistics</h2>
                     <p>
                         <span>Current open requests:</span>
