@@ -33,8 +33,8 @@ const register = async (req, res) => {
         degree: req.body.degree,
         password: req.body.password,
         description: "",
-        role:'Basic',
-        verified:false
+        role: "Basic",
+        verified: false,
     });
     registeredUser
         .save()
@@ -49,32 +49,31 @@ const register = async (req, res) => {
 
 //* login to the database, check if user exist and if it has been verified
 const login = async (req, res) => {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         return res.status(400).json({
-            errors: errors.array()
-        })
+            errors: errors.array(),
+        });
     }
     const user = await loginSchema.findOne({
-        email: req.body.email
+        email: req.body.email,
     });
     if (!user) {
-        return res.status(401).send('user doesnt exist');
+        return res.status(401).send("user doesnt exist");
     }
-    if(!user.verified){
+    if (!user.verified) {
         return res.status(400).json({
-          errors: [{ msg: "User has not been verified yet, please wait for the admin to verify" }],
+            errors: [{ msg: "User has not been verified yet, please wait for the admin to verify" }],
         });
-      }
-    console.log('found user')
+    }
+
+    console.log("found user");
     const isPassValid = await bcrypt.compare(req.body.password, user.password);
     if (isPassValid) {
-        const token = jwt.sign(
-            {id: user.id, name: user.name, role: user.role, verified: user.verified},
-            process.env.ACCESS_TOKEN, {
-                expiresIn: 3600,
-            }
-            );
+        const token = jwt.sign({ id: user.id, name: user.name, role: user.role, verified: user.verified }, process.env.ACCESS_TOKEN, {
+            expiresIn: 3600,
+        });
+
         res.header("auth", token).send(token);
     } else {
         return res.json({ status: "error", user: false });
@@ -92,12 +91,23 @@ const getAll = async (request, response) => {
 
 const getUnverified = async (req, res) => {
     try {
-        const unverified = await loginSchema.find({ "verified": false });
+
+        const unverified = await loginSchema.find({ verified: false });
         return res.json(unverified);
     } catch (error) {
-        return res.json({message: error});
+        return res.json({ message: error });
     }
-}
+};
+
+const getVerified = async (req, res) => {
+    try {
+        const verified = await loginSchema.find({ verified: true });
+        return res.json(verified);
+    } catch (error) {
+        return res.json({ message: error });
+    }
+};
+
 
 const findUser = async (request, response) => {
     try {
@@ -120,19 +130,18 @@ const updateUser = async (request, response) => {
     }
 };
 
-
-const verifyUser = async (req,res) => {
-    try{
+const verifyUser = async (req, res) => {
+    try {
         const user = await loginSchema.findByIdAndUpdate(
             { _id: req.params._id },
             {
-                verified: true
+                verified: true,
             }
         );
         res.json(user);
-    } catch(error) {
+    } catch (error) {
         console.log(error.message);
-        res.status(404).json("Id not found"); 
+        res.status(404).json("Id not found");
     }
 };
 
@@ -153,5 +162,6 @@ module.exports = {
     updateUser,
     verifyUser,
     getUnverified,
+    getVerified,
     deleteOne,
 };

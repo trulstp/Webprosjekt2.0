@@ -71,7 +71,7 @@ class SignUp extends Component {
             password: this.state.password,
         };
 
-        axios.post("http://localhost:5000/admin/", registered).then((response) => console.log(response.data));
+        axios.post("http://localhost:5000/app/register", registered).then((response) => console.log(response.data));
 
         this.setState({
             name: "",

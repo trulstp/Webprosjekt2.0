@@ -75,7 +75,7 @@ class Profile extends Component {
     }
 
     fetchProfile(id) {
-        return axios.get(`http://localhost:5000/admin/${id}`);
+        return axios.get(`http://localhost:5000/app/${id}`);
     }
 
     fetchRequests(id) {

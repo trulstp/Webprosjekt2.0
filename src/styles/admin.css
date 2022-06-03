@@ -38,7 +38,9 @@
     margin: 0;
 }
 
-.btn-admin {
+.btn-admin,
+.btn-admin-accepted,
+.btn-admin-deleted {
     background-color: #082933;
     color: #fff;
     border: 4px solid #082933;
@@ -49,17 +51,22 @@
     font-size: 1rem;
 }
 
-.btn-admin:hover {
+.btn-admin:hover,
+.btn-admin-accepted,
+.btn-admin-deleted {
     background-color: #fff;
     color: #082933;
 }
 
-.delete-user {
+.delete-user,
+.btn-admin-deleted {
     background-color: #470707;
     border: 4px solid #470707;
 }
 
-.delete-user:hover {
+.delete-user:hover,
+.btn-admin-deleted {
+    background-color: #fff;
     color: #470707;
 }
 
