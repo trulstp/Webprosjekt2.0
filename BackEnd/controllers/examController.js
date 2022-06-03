@@ -30,6 +30,15 @@ const findExam = async (request, response) => {
     }
 };
 
+const findExamAuthor = async (request, response) => {
+    try {
+        const req = await examSchema.find({ author: request.params.author });
+        response.status(200).json({ req });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
 const registerExam = (request, response) => {
     const registeredExam = new examSchema({
         author: request.body.author,
@@ -81,5 +90,6 @@ module.exports = {
     getAll,
     updateExam,
     findExam,
+    findExamAuthor,
     getStat,
 };

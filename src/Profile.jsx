@@ -6,30 +6,40 @@ import "./styles/media.css";
 import "./styles/profile.css";
 
 const ShowRequests = ({ requestList }) => {
-    return (
-        <div>
-            {requestList.map((currentRequest) => (
-                <section className="profile-request" key={currentRequest._id}>
-                    <div className="profile-request-details">
-                        <h2>{currentRequest.title}</h2>
-                        <p>Posted: {currentRequest.deadline}</p>
-                        <p>
-                            Exam period: {currentRequest.examStart} - {currentRequest.examEnd}
-                        </p>
-                        <p>
-                            <span className="bold">Level of examination:</span> {currentRequest.examLvl}
-                        </p>
-                        <ul>
-                            <li>{currentRequest.tags}</li>
-                        </ul>
-                    </div>
-                    <div className="profile-request-controls">
-                        <a href={getLink(currentRequest._id)}>View request</a>
-                    </div>
+    if (requestList.length > 0) {
+        return (
+            <div>
+                {requestList.map((currentRequest) => (
+                    <section className="profile-request" key={currentRequest._id}>
+                        <div className="profile-request-details">
+                            <h2>{currentRequest.title}</h2>
+                            <p>Posted: {currentRequest.deadline}</p>
+                            <p>
+                                Exam period: {currentRequest.examStart} - {currentRequest.examEnd}
+                            </p>
+                            <p>
+                                <span className="bold">Level of examination:</span> {currentRequest.examLvl}
+                            </p>
+                            <ul>
+                                <li>{currentRequest.tags}</li>
+                            </ul>
+                        </div>
+                        <div className="profile-request-controls">
+                            <a href={getLink(currentRequest._id)}>View request</a>
+                        </div>
+                    </section>
+                ))}
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <section className="profile-request">
+                    <p>The user has not posted any requests.</p>
                 </section>
-            ))}
-        </div>
-    );
+            </div>
+        );
+    }
 };
 
 const getLink = (id) => {
@@ -51,10 +61,10 @@ class Profile extends Component {
     }
 
     async componentDidMount() {
-        const requestResponse = await this.fetchRequests();
-        this.setState({ requestList: requestResponse.data });
-
         const id = this.fetchId();
+        const requestResponse = await this.fetchRequests(id);
+        this.setState({ requestList: requestResponse.data.req });
+
         const profileResponse = await this.fetchProfile(id);
         console.log(profileResponse);
         this.setState({
@@ -65,8 +75,8 @@ class Profile extends Component {
         });
     }
 
-    fetchRequests() {
-        return axios.get("http://localhost:5000/exam/");
+    fetchRequests(id) {
+        return axios.get(`http://localhost:5000/exam/author/${id}`);
     }
 
     showHistory() {

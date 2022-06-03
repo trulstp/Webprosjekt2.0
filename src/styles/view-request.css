@@ -40,6 +40,20 @@ h2 {
     color: #082933;
 }
 
+.request-feedback-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+}
+
+.request-feedback {
+    display: none;
+    text-align: right;
+    padding: 10px;
+    border: 2px solid #082933;
+    border-radius: 7px;
+}
+
 @media (min-width: 500px) {
     .btn-wrapper {
         justify-content: right;
