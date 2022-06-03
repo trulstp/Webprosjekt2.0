@@ -66,12 +66,14 @@ const login = async (req, res) => {
             errors: [{ msg: "User has not been verified yet, please wait for the admin to verify" }],
         });
     }
+
     console.log("found user");
     const isPassValid = await bcrypt.compare(req.body.password, user.password);
     if (isPassValid) {
         const token = jwt.sign({ id: user.id, name: user.name, role: user.role, verified: user.verified }, process.env.ACCESS_TOKEN, {
             expiresIn: 3600,
         });
+
         res.header("auth", token).send(token);
     } else {
         return res.json({ status: "error", user: false });
@@ -89,6 +91,7 @@ const getAll = async (request, response) => {
 
 const getUnverified = async (req, res) => {
     try {
+
         const unverified = await loginSchema.find({ verified: false });
         return res.json(unverified);
     } catch (error) {
@@ -104,6 +107,7 @@ const getVerified = async (req, res) => {
         return res.json({ message: error });
     }
 };
+
 
 const findUser = async (request, response) => {
     try {
@@ -140,6 +144,7 @@ const verifyUser = async (req, res) => {
         res.status(404).json("Id not found");
     }
 };
+
 
 const deleteOne = async (request, response) => {
     try {

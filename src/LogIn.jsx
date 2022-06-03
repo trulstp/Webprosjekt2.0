@@ -12,10 +12,16 @@ class LogIn extends Component {
             password: "",
             requestList: [],
         };
+        
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        if(sessionStorage.getItem("verified") === true){
+            window.location.assign("/all");
+        }
     }
+
+    
 
     changeEmail(event) {
         this.setState({
@@ -51,16 +57,22 @@ class LogIn extends Component {
             let decodedToken = jwt_decode(token);
             console.log(decodedToken.role);
             sessionStorage.setItem("role", decodedToken.role);
+            sessionStorage.setItem("verified", decodedToken.verified);
             sessionStorage.setItem("id", decodedToken.id);
             sessionStorage.setItem("name", decodedToken.name);
-        });
+        })
+
+        
+
 
         this.setState({
             email: "",
             password: "",
         });
-        let test = sessionStorage.getItem("token");
-        console.log(test);
+
+        if(sessionStorage.getItem("verified") === true){
+            window.location.assign("/all");
+        }
     }
 
     checkNumber(type) {

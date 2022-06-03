@@ -67,6 +67,7 @@ class SignUp extends Component {
             email: this.state.email,
             phonenr: this.state.phonenr,
             university: this.state.university,
+            education: this.state.education,
             password: this.state.password,
         };
 
@@ -77,6 +78,7 @@ class SignUp extends Component {
             email: "",
             phonenr: "",
             university: "",
+            education: "",
             password: "",
         });
     }
