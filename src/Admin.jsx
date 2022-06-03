@@ -17,10 +17,10 @@ const AddUsers = ({ newUsers }) => {
                         <p>Title: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
-                        <button className="btn-admin" onClick={() => acceptUser(user._id)}>
+                        <button className="btn-admin" onClick={(event) => acceptUser(user._id, event.target)}>
                             Accept
                         </button>
-                        <button className="btn-admin delete-user" onClick={() => rejectUser(user._id)}>
+                        <button className="btn-admin delete-user" onClick={(event) => deleteUser(user._id, event.target)}>
                             Reject
                         </button>
                     </div>
@@ -45,7 +45,7 @@ const ManageUsers = ({ addedUsers }) => {
                         <a href={getLink(user._id)} className="btn-admin">
                             Edit
                         </a>
-                        <button className="btn-admin delete-user" onClick={() => deleteUser(user._id)}>
+                        <button className="btn-admin delete-user" onClick={(event) => deleteUser(user._id, event.target)}>
                             Delete
                         </button>
                     </div>
@@ -59,33 +59,23 @@ const getLink = (id) => {
     return `edit-profile?id=${id}`;
 };
 
-const acceptUser = (id) => {
-    axios
-        .get(`http://localhost:5000/admin/${id}`)
-        .then((response) => {
-            const user = {
-                name: response.data.user[0].name,
-                email: response.data.user[0].email,
-                phonenr: response.data.user[0].phonenr,
-                university: response.data.user[0].university,
-                degree: response.data.user[0].degree,
-                password: response.data.user[0].password,
-            };
-            console.log(user);
-            return user;
-        })
-        .then((response) => {
-            console.log(response);
-            axios.post("http://localhost:5000/app/", response);
-        });
+const acceptUser = (id, btn) => {
+    const accept = {
+        verified: true,
+    };
+    axios.patch(`http://localhost:5000/app/${id}`, accept);
+
+    btn.disabled = true;
+    btn.innerHTML = "Accepted";
+    btn.setAttribute("class", "btn-admin-accepted");
 };
 
-const rejectUser = (id) => {
-    axios.delete(`http://localhost:5000/admin/${id}`).then((response) => console.log(response.data));
-};
-
-const deleteUser = (id) => {
+const deleteUser = (id, btn) => {
     axios.delete(`http://localhost:5000/app/${id}`).then((response) => console.log(response.data));
+
+    btn.disabled = true;
+    btn.innerHTML = "Deleted";
+    btn.setAttribute("class", "btn-admin-deleted");
 };
 
 class Admin extends Component {
@@ -93,6 +83,7 @@ class Admin extends Component {
         super();
         this.state = {
             addUsersActive: true,
+            userAccepted: false,
             newUsers: [],
             addedUsers: [],
         };
@@ -107,11 +98,11 @@ class Admin extends Component {
     }
 
     fetchNewUsers() {
-        return axios.get("http://localhost:5000/admin/");
+        return axios.get("http://localhost:5000/app/unverified");
     }
 
     fetchUsers() {
-        return axios.get("http://localhost:5000/app/");
+        return axios.get("http://localhost:5000/app/verified");
     }
 
     render() {

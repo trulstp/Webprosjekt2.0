@@ -5,7 +5,7 @@ import "./styles/media.css";
 import "./styles/applicants.css";
 
 const ShowApplicants = ({ profileList }) => {
-    console.log(profileList, profileList[0], profileList.length);
+    //console.log(profileList, [...profileList], profileList[0], profileList.length);
     if (profileList.length > 0) {
         return (
             <div>
@@ -71,7 +71,7 @@ class ViewApplicants extends Component {
     }
 
     async fetchProfile(id) {
-        return axios.get(`http://localhost:5000/admin/${id}`);
+        return axios.get(`http://localhost:5000/app/${id}`);
     }
 
     generateProfileList() {
@@ -95,7 +95,7 @@ class ViewApplicants extends Component {
     }
 
     render() {
-        //console.log(this.state.profileList);
+        console.log(this.state.profileList);
         return (
             <div className="wrapper">
                 <div className="to-top">
@@ -106,6 +106,7 @@ class ViewApplicants extends Component {
 
                     <div className="applicant-list">
                         <ShowApplicants profileList={this.state.profileList} />
+                        <p>{this.state.profileList}</p>
                     </div>
                 </main>
             </div>
