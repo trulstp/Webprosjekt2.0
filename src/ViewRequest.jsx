@@ -19,7 +19,7 @@ class ViewRequest extends Component {
             description: "",
             date: "",
 
-            alreadyApplied: "",
+            appFeedback: "",
         };
 
         this.applyUser = this.applyUser.bind(this);
@@ -28,7 +28,6 @@ class ViewRequest extends Component {
     async componentDidMount() {
         const id = this.fetchId();
         const response = await this.fetchRequest(id);
-        console.log(response);
         this.setState({
             title: response.data.req[0].title,
             deadline: response.data.req[0].deadline,
@@ -70,6 +69,8 @@ class ViewRequest extends Component {
         //Checks if user has already applied
         const alreadyApplied = applicants.find((applicant) => applicant === id);
 
+        document.querySelector(".request-feedback").style.display = "block";
+
         if (!alreadyApplied) {
             applicants.push(id);
 
@@ -78,9 +79,13 @@ class ViewRequest extends Component {
             };
 
             axios.patch(`http://localhost:5000/exam/${requestId}`, updatedApplicantList);
+
+            this.setState({
+                appFeedback: "You have applied.",
+            });
         } else {
             this.setState({
-                alreadyApplied: "You have already applied.",
+                appFeedback: "You have already applied.",
             });
         }
     }
@@ -128,7 +133,9 @@ class ViewRequest extends Component {
                             Apply as second examiner
                         </button>
                     </div>
-                    <p>{this.state.alreadyApplied}</p>
+                    <div className="request-feedback-wrapper">
+                        <p className="request-feedback">{this.state.appFeedback}</p>
+                    </div>
                 </main>
             </div>
         );
