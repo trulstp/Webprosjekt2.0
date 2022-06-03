@@ -1,7 +1,6 @@
 const { response } = require("express");
 const express = require("express");
 const router = express.Router();
-const {auth, authRole} = require('../middleware/authMiddleware')
 const { deleteExam, registerExam, findTag, getAll, updateExam, findExam, getStat } = require("../controllers/examController");
 
 router.post("/", registerExam);

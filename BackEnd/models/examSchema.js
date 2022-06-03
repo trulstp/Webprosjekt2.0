@@ -62,7 +62,7 @@ const examSchema = new mongoose.Schema({
         required: true,
     },
     Applicants: {
-        type: String,
+        type: Array,
     },
     date: {
         type: Date,

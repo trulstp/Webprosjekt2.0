@@ -1,5 +1,4 @@
 const examSchema = require("../models/examSchema");
-const auth = require('../middleware/authMiddleware')
 
 const findTag = async (request, response) => {
     try {

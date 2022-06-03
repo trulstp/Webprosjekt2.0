@@ -34,12 +34,24 @@ const loginSchema = new mongoose.Schema({
     },
     role:{
         type: String,
-        required:true
+        required:true,
+        default: "Basic"
+    },
+    verified:{
+        type: Boolean,
+        default: false,
     },
     date: {
         type: Date,
         default: Date.now,
     },
+});
+
+
+loginSchema.pre("save", async function (next) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 module.exports = mongoose.model("mytable", loginSchema);

@@ -13,6 +13,7 @@ import Navigation from "./Navigation";
 import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
 import Admin from "./Admin";
+import ProtectedRoutes from "./utils/protectedUserRoute";
 
 
 const NavigationRoutes = () => {
@@ -30,7 +31,7 @@ const NavigationRoutes = () => {
                 <Route path="/" element={<LogIn />} exact />
 
                 <Route path="*" element={<NotFound />} /> 
-
+                <Route element={<ProtectedRoutes/>} >
                 <Route element={<SidebarLayout />}>
                     <Route path="/all" element={<AllRequests />} />
 
@@ -49,6 +50,7 @@ const NavigationRoutes = () => {
                     <Route path="/admin" element={<Admin />} />
 
                     
+                </Route>
                 </Route>
             </Routes>
         </Router>
