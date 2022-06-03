@@ -15,6 +15,8 @@ class EditProfile extends Component {
             degree: "",
             password: "",
             description: "",
+
+            feedback: "",
         };
 
         this.changeName = this.changeName.bind(this);
@@ -91,17 +93,35 @@ class EditProfile extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        const request = {
-            name: this.state.name,
-            email: this.state.email,
-            phonenr: this.state.phonenr,
-            university: this.state.university,
-            degree: this.state.degree,
-            password: this.state.password,
-            description: this.state.description,
-        };
+        //Checks if password has been changed
+        if (this.state.password.length > 6) {
+            const request = {
+                name: this.state.name,
+                email: this.state.email,
+                phonenr: this.state.phonenr,
+                university: this.state.university,
+                degree: this.state.degree,
+                password: this.state.password,
+                description: this.state.description,
+            };
 
-        axios.patch(`http://localhost:5000/app/${this.fetchId()}`, request).then((response) => console.log(response.data));
+            axios.patch(`http://localhost:5000/app/${this.fetchId()}`, request).then((response) => console.log(response.data));
+        } else {
+            const requestWithoutPassword = {
+                name: this.state.name,
+                email: this.state.email,
+                phonenr: this.state.phonenr,
+                university: this.state.university,
+                degree: this.state.degree,
+                description: this.state.description,
+            };
+
+            axios.patch(`http://localhost:5000/app/${this.fetchId()}`, requestWithoutPassword).then((response) => console.log(response.data));
+        }
+
+        this.setState({
+            feedback: "Profile has been updated",
+        });
     }
 
     render() {
@@ -135,6 +155,7 @@ class EditProfile extends Component {
                         <label htmlFor="edit-description">Description</label>
                         <textarea id="edit-description" placeholder="Your description here..." className="updateProfile" onChange={this.changeDescription} value={this.state.description} />
 
+                        <p className="submit-feedback">{this.state.feedback}</p>
                         <input type="submit" className="btn-edit" value="Save" />
                     </form>
                 </main>

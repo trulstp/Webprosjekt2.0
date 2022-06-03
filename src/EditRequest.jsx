@@ -17,6 +17,8 @@ class EditRequest extends Component {
             minEdu: "",
             examLvl: "",
             description: "",
+
+            feedback: "",
         };
         this.changeTitle = this.changeTitle.bind(this);
         this.changeDeadline = this.changeDeadline.bind(this);
@@ -123,6 +125,10 @@ class EditRequest extends Component {
 
         axios.patch(`http://localhost:5000/exam/${this.fetchId()}`, request).then((response) => console.log(response.data));
 
+        this.setState({
+            feedback: "Request has been updated",
+        });
+
         //window.location.href = "http://localhost:3000/my-profile";
     }
 
@@ -181,6 +187,7 @@ class EditRequest extends Component {
                         <label htmlFor="request-description">Description</label>
                         <textarea id="request-description" onChange={this.changeDescription} value={this.state.description} placeholder="Your description here..." required />
 
+                        <p className="submit-feedback">{this.state.feedback}</p>
                         <input type="submit" className="btn-submit" value="Update request" />
                     </form>
                 </main>
