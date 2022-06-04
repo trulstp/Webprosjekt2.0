@@ -5,12 +5,12 @@ import RequestIcon from "./icons/request.png";
 import LogoutIcon from "./icons/logout.png";
 
 
-
+function logout() {
+    sessionStorage.clear();
+    console.log("test")
+}
 class Navigation extends Component {
-    logout() {
-        sessionStorage.clear();
-        console.log("test")
-    }
+    
     render() {
         return (
             <nav className="menu">
@@ -41,8 +41,8 @@ class Navigation extends Component {
                     </a>
                 </div>
                 <div>
-                    <a href="/" className="link" onClick={this.logout() } >
-                        <img src={LogoutIcon} alt="Log out" />
+                    <a href="/" className="link">
+                        <img src={LogoutIcon} onClick={ ()=>logout() } alt="Log out" />
                         Log out
                     </a>
                 </div>

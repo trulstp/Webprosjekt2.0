@@ -10,7 +10,7 @@ const findTag = async (request, response) => {
 };
 
 const getStat = (request, response) => {
-    examSchema.find({}, { _id: 0, title: 0, deadline: 0, examStart: 0, examEnd: 0, tags: 0, minEdu: 0, examLvl: 0, description: 0, date: 0, __v: 0 }).then((showExams) => response.json(showExams));
+    examSchema.find({}, { _id: 0, title: 0, deadline: 0, examStart: 0, examEnd: 0, tags: 0, minEdu: 0, examLvl: 0, description: 0, date: 0, __v: 0, author: 0, acceptedApplicant: 0, applicants: 0}).then((showExams) => response.json(showExams));
 };
 
 const getAll = (request, response) => {
