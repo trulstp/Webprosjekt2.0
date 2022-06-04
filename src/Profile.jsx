@@ -46,9 +46,9 @@ const ShowHistory = ({ historyList, name }) => {
     if (historyList.length > 0) {
         return (
             <div>
+                <h2 className="examiner-header">{name} has been an examiner on:</h2>
                 {historyList.map((currentEntry) => (
                     <div key={currentEntry._id}>
-                        <h2 className="examiner-header">{name} has been an examiner on:</h2>
                         <section className="profile-request">
                             <div className="profile-request-details">
                                 <h2>{currentEntry.title}</h2>
