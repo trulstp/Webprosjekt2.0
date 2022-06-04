@@ -143,7 +143,7 @@ class NewRequest extends Component {
                         </div>
 
                         <label htmlFor="request-tag">Tag</label>
-                        <select id="request-tag" value={this.state.tags} onChange={this.changeTags}>
+                        <select id="request-tag" value={this.state.tags} onChange={this.changeTags} required>
                             <option value="">Select a tag</option>
                             <option value="Estetiske fag, kunst- og musikkfag">Estetiske fag, kunst- og musikkfag</option>
                             <option value="Fiskeri-, husdyr- og landbruksfag">Fiskeri-, husdyr- og landbruksfag</option>

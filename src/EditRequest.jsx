@@ -128,8 +128,6 @@ class EditRequest extends Component {
         this.setState({
             feedback: "Request has been updated",
         });
-
-        //window.location.href = "http://localhost:3000/my-profile";
     }
 
     render() {

@@ -6,32 +6,42 @@ import "./styles/media.css";
 import "./styles/all-requests.css";
 
 const Requests = ({ requests }) => {
-    return (
-        <div>
-            {requests.map((request) => (
-                <section className="request" key={request._id}>
-                    <div className="request-details">
-                        <h2>{request.title}</h2>
-                        <p>Application deadline: {request.deadline}</p>
-                        <p>
-                            Exam period: {request.examStart} - {request.examEnd}
-                        </p>
-                        <p>
-                            <span className="bold">Level of examination:</span> {request.examLvl}
-                        </p>
-                        <ul>
-                            <li>{request.tags}</li>
-                        </ul>
-                    </div>
-                    <div className="view-request-wrapper">
-                        <a href={getLink(request._id)} className="view-request">
-                            View request
-                        </a>
-                    </div>
+    if (requests.length > 0) {
+        return (
+            <div>
+                {requests.map((request) => (
+                    <section className="request" key={request._id}>
+                        <div className="request-details">
+                            <h2>{request.title}</h2>
+                            <p>Application deadline: {request.deadline}</p>
+                            <p>
+                                Exam period: {request.examStart} - {request.examEnd}
+                            </p>
+                            <p>
+                                <span className="bold">Level of examination:</span> {request.examLvl}
+                            </p>
+                            <ul>
+                                <li>{request.tags}</li>
+                            </ul>
+                        </div>
+                        <div className="view-request-wrapper">
+                            <a href={getLink(request._id)} className="view-request">
+                                View request
+                            </a>
+                        </div>
+                    </section>
+                ))}
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <section className="request">
+                    <p>There are currently no open requests</p>
                 </section>
-            ))}
-        </div>
-    );
+            </div>
+        );
+    }
 };
 
 const getLink = (id) => {
@@ -52,11 +62,7 @@ class AllRequests extends Component {
 
     async componentDidMount() {
         const response = await this.fetchRequests();
-        this.setState({ requests: response.data });
-    }
-
-    fetchRequests() {
-        return axios.get("http://localhost:5000/exam/");
+        this.setState({ requests: response });
     }
 
     filterRequest(event) {
@@ -72,6 +78,35 @@ class AllRequests extends Component {
             this.setState({ filterOn: true });
         } else {
             this.setState({ filterOn: false });
+        }
+    }
+
+    async fetchRequests() {
+        const allRequests = await axios.get("http://localhost:5000/exam/");
+        const openRequests = allRequests.data.filter((request) => {
+            return request.open && this.hasHappened(request.deadline);
+        });
+
+        return openRequests;
+    }
+
+    getDate() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const day = date.getDate().toString().padStart(2, "0");
+
+        return `${year}${month}${day}`;
+    }
+
+    hasHappened(deadlineString) {
+        const currentDate = parseInt(this.getDate());
+        const deadline = parseInt(deadlineString.replaceAll("-", ""));
+
+        if (deadline >= currentDate) {
+            return true;
+        } else {
+            return false;
         }
     }
 

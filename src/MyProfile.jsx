@@ -43,12 +43,53 @@ const ShowRequests = ({ requestList }) => {
     }
 };
 
+const ShowHistory = ({ historyList, name }) => {
+    if (historyList.length > 0) {
+        return (
+            <div>
+                {historyList.map((currentEntry) => (
+                    <div key={currentEntry._id}>
+                        <h2 className="examiner-header">{name} has been an examiner on:</h2>
+                        <section className="profile-request">
+                            <div className="profile-request-details">
+                                <h2>{currentEntry.title}</h2>
+                                <p>Posted: {currentEntry.date}</p>
+                                <p>
+                                    Exam period: {currentEntry.examStart} - {currentEntry.examEnd}
+                                </p>
+                                <ul>
+                                    <li>{currentEntry.tags}</li>
+                                </ul>
+                            </div>
+                            <div className="profile-request-controls">
+                                <a href={getLinkView(currentEntry._id)}>View request</a>
+                            </div>
+                        </section>
+                    </div>
+                ))}
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <section className="profile-request">
+                    <p>You have not been accepted as an applicant.</p>
+                </section>
+            </div>
+        );
+    }
+};
+
 const getLinkApplicants = (id) => {
     return `view-applicants?id=${id}`;
 };
 
 const getLinkEdit = (id) => {
     return `edit-request?id=${id}`;
+};
+
+const getLinkView = (id) => {
+    return `view-request?id=${id}`;
 };
 
 class Profile extends Component {
@@ -58,6 +99,7 @@ class Profile extends Component {
             name: "",
             description: "",
             requestList: [],
+            historyList: [],
             requestActive: true,
         };
     }
@@ -72,6 +114,9 @@ class Profile extends Component {
 
         const requestResponse = await this.fetchRequests(id);
         this.setState({ requestList: requestResponse.data.req });
+
+        const history = await this.fetchHistory(id);
+        this.setState({ historyList: history.data.req });
     }
 
     fetchProfile(id) {
@@ -82,35 +127,15 @@ class Profile extends Component {
         return axios.get(`http://localhost:5000/exam/author/${id}`);
     }
 
+    fetchHistory(id) {
+        return axios.get(`http://localhost:5000/exam/history/${id}`);
+    }
+
     getLink(id) {
         return `/edit-profile?id=${id}`;
     }
 
-    showHistory() {
-        return (
-            <div>
-                <h2 className="examiner-header">Name Lastname has been an examiner on:</h2>
-                <section className="profile-request">
-                    <div className="profile-request-details">
-                        <h2>Request name</h2>
-                        <p>Posted: 18.04.2022</p>
-                        <p>Exam period: 21.05.2022 - 22.05.2022</p>
-                        <ul>
-                            <li>Tag 1</li>
-                            <li>Tag 2</li>
-                        </ul>
-                    </div>
-                    <div className="profile-request-controls">
-                        <a href="/view-request">View request</a>
-                    </div>
-                </section>
-            </div>
-        );
-    }
-
     render() {
-        const showHistory = this.showHistory();
-
         return (
             <div className="wrapper">
                 <div className="to-top">
@@ -151,7 +176,9 @@ class Profile extends Component {
                             </button>
                         </div>
 
-                        <div id="profile-result">{this.state.requestActive ? <ShowRequests requestList={this.state.requestList} /> : showHistory}</div>
+                        <div id="profile-result">
+                            {this.state.requestActive ? <ShowRequests requestList={this.state.requestList} /> : <ShowHistory historyList={this.state.historyList} name={this.state.name} />}
+                        </div>
                     </div>
                 </main>
             </div>
