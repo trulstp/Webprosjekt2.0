@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import ListIcon from "./icons/list.png";
 import ProfileIcon from "./icons/profile.png";
 import RequestIcon from "./icons/request.png";
@@ -8,6 +7,10 @@ import LogoutIcon from "./icons/logout.png";
 
 
 class Navigation extends Component {
+    logout() {
+        sessionStorage.clear();
+        console.log("test")
+    }
     render() {
         return (
             <nav className="menu">
@@ -31,17 +34,15 @@ class Navigation extends Component {
                         New request
                     </a>
                 </div>
-
                 <div>
                     <a href="/admin" className="link" id="my-profile-link">
                         <img src={ProfileIcon} alt="Admin" />
                         Administrate
                     </a>
                 </div>
-
                 <div>
-                    <a href="/" className="link">
-                        <img src={LogoutIcon} alt="Log out" sessionStorage/>
+                    <a href="/" className="link" onClick={this.logout() } >
+                        <img src={LogoutIcon} alt="Log out" />
                         Log out
                     </a>
                 </div>

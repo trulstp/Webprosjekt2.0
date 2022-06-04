@@ -2,7 +2,7 @@ import {Outlet, Navigate} from "react-router-dom";
 import { useLocation} from "react-router";
 
 const useAuth = () => {
-    const user = {loggedIn: false}
+    const user = {verified: false}
     if(sessionStorage.getItem("verified") === "true"){
         user.verified = true;
     };
