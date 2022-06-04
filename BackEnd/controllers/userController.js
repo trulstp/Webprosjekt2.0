@@ -33,7 +33,7 @@ const register = async (req, res) => {
         degree: req.body.degree,
         password: req.body.password,
         description: "",
-        role: "Basic",
+        role: "basic",
         verified: false,
     });
     registeredUser
@@ -123,8 +123,12 @@ const updateUser = async (request, response) => {
         const _id = request.params;
         const updateUser = await loginSchema.findOneAndUpdate(_id, request.body, {
             new: true,
+            
         });
-        response.send(updateUser);
+        updateUser.save()
+        .then((data) => {
+            response.json(data);
+        })
     } catch (e) {
         response.status(404).send(e);
     }
@@ -134,9 +138,7 @@ const verifyUser = async (req, res) => {
     try {
         const user = await loginSchema.findByIdAndUpdate(
             { _id: req.params._id },
-            {
-                verified: true,
-            }
+            
         );
         res.json(user);
     } catch (error) {

@@ -1,6 +1,8 @@
+import { Navigate } from "react-router-dom"
 import React, { Component } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+
 import "./styles/login.css";
 import "./styles/login-media.css";
 
@@ -11,6 +13,7 @@ class LogIn extends Component {
             email: "",
             password: "",
             requestList: [],
+            redirect: false
         };
         
         this.changeEmail = this.changeEmail.bind(this);
@@ -63,15 +66,19 @@ class LogIn extends Component {
         })
 
         
-
+        
 
         this.setState({
             email: "",
             password: "",
         });
+       
+        this.state.redirect && <Navigate to='/all' replace={true} />
+
+        
 
         if(sessionStorage.getItem("verified") === true){
-            window.location.assign("/all");
+            
         }
     }
 

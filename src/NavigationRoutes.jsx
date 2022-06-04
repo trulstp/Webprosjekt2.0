@@ -15,6 +15,7 @@ import EditRequest from "./EditRequest";
 import ViewApplicants from "./Applicants";
 import Admin from "./Admin";
 import ProtectedRoutes from "./utils/protectedUserRoute";
+import ProtectedAdminRoutes from "./utils/protectedAdminRoute";
 
 const NavigationRoutes = () => {
     const SidebarLayout = () => (
@@ -49,7 +50,10 @@ const NavigationRoutes = () => {
 
                     <Route path="/view-request" element={<ViewRequest />} />
 
+                <Route element={<ProtectedAdminRoutes/>}>
+
                     <Route path="/admin" element={<Admin />} />
+                </Route>
                 </Route>
                 </Route>
             </Routes>
