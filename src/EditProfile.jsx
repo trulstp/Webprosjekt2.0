@@ -68,7 +68,6 @@ class EditProfile extends Component {
     async componentDidMount() {
         const id = this.fetchId();
         const response = await this.fetchRequest(id);
-        console.log(response);
         this.setState({
             name: response.data.user[0].name,
             email: response.data.user[0].email,

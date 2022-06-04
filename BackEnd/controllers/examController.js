@@ -38,6 +38,15 @@ const findExamAuthor = async (request, response) => {
     }
 };
 
+const findExamHistory = async (request, response) => {
+    try {
+        const req = await examSchema.find({ acceptedApplicant: request.params.acceptedApplicant });
+        response.status(200).json({ req });
+    } catch (error) {
+        response.json({ message: error });
+    }
+};
+
 const registerExam = (request, response) => {
     const registeredExam = new examSchema({
         author: request.body.author,
@@ -90,5 +99,6 @@ module.exports = {
     updateExam,
     findExam,
     findExamAuthor,
+    findExamHistory,
     getStat,
 };

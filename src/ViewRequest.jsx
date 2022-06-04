@@ -64,14 +64,21 @@ class ViewRequest extends Component {
         const requestId = this.fetchId();
         const request = await this.fetchRequest(requestId);
         const applicants = request.data.req[0].applicants;
+        const author = request.data.req[0].author;
+        const matched = request.data.req[0].matched;
         const id = sessionStorage.getItem("id");
 
         //Checks if user has already applied
         const alreadyApplied = applicants.find((applicant) => applicant === id);
+        let checkIfAuthor = false;
+
+        if (author === id) {
+            checkIfAuthor = true;
+        }
 
         document.querySelector(".request-feedback").style.display = "block";
 
-        if (!alreadyApplied) {
+        if (!alreadyApplied && !checkIfAuthor && !matched) {
             applicants.push(id);
 
             const updatedApplicantList = {
@@ -82,6 +89,10 @@ class ViewRequest extends Component {
 
             this.setState({
                 appFeedback: "You have applied.",
+            });
+        } else if (checkIfAuthor) {
+            this.setState({
+                appFeedback: "You can't apply to your own request.",
             });
         } else {
             this.setState({

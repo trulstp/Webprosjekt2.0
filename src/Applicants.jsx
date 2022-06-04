@@ -5,7 +5,6 @@ import "./styles/media.css";
 import "./styles/applicants.css";
 
 const ShowApplicants = ({ profileList }) => {
-    //console.log(profileList, [...profileList], profileList[0], profileList.length);
     if (profileList.length > 0) {
         return (
             <div>
@@ -19,7 +18,12 @@ const ShowApplicants = ({ profileList }) => {
                             <p>Education level: {applicant.degree}</p>
                         </div>
                         <div className="accept-applicant">
-                            <button className="btn-applicant">Accept applicant</button>
+                            <a href={getLink(applicant.id)} className="btn-applicant">
+                                View profile
+                            </a>
+                            <button onClick={(event) => acceptUser(applicant.id, event.target)} className="btn-applicant">
+                                Accept applicant
+                            </button>
                         </div>
                     </section>
                 ))}
@@ -36,27 +40,79 @@ const ShowApplicants = ({ profileList }) => {
     }
 };
 
+const ShowAcceptedApplicant = ({ profile }) => {
+    return (
+        <div>
+            <section>
+                <div className="applicant-details">
+                    <h2>
+                        <a href={getLink(profile._id)}>{profile.name}</a>
+                    </h2>
+                    <p>University: {profile.university}</p>
+                    <p>Education level: {profile.degree}</p>
+                </div>
+                <div className="accept-applicant">
+                    <a href={getLink(profile._id)} className="btn-applicant">
+                        View profile
+                    </a>
+                </div>
+            </section>
+        </div>
+    );
+};
+
 const getLink = (id) => {
     return `profile?id=${id}`;
+};
+
+const fetchRequestId = () => {
+    const query = document.location.search;
+    const parameter = new URLSearchParams(query);
+    const id = parameter.get("id");
+    return id;
+};
+
+const acceptUser = async (id, btn) => {
+    const request = await axios.get(`http://localhost:5000/exam/${fetchRequestId()}`);
+    const matched = request.data.req[0].matched;
+    if (!matched) {
+        const accept = {
+            acceptedApplicant: id,
+            matched: true,
+            open: false,
+        };
+        axios.patch(`http://localhost:5000/exam/${fetchRequestId()}`, accept);
+
+        btn.disabled = true;
+        btn.innerHTML = "Accepted applicant";
+        btn.setAttribute("class", "btn-applicant-accepted");
+    }
 };
 
 class ViewApplicants extends Component {
     constructor() {
         super();
         this.state = {
-            applicantList: [],
             profileList: [],
+            matched: false,
+
+            acceptedApplicant: {},
         };
     }
 
     async componentDidMount() {
-        const id = await this.fetchId();
+        const id = this.fetchId();
 
-        const requestResponse = await this.fetchRequest(id);
-        this.setState({ applicantList: requestResponse.data.req[0].applicants });
+        const matched = await this.requestMatched(id);
+        this.setState({ matched: matched });
 
-        const profileList = this.generateProfileList();
-        this.setState({ profileList: profileList });
+        if (matched) {
+            const profile = await this.fetchAccepted(id);
+            this.setState({ acceptedApplicant: profile });
+        } else {
+            const requestResponse = await this.fetchRequest(id);
+            this.setState({ profileList: requestResponse });
+        }
     }
 
     fetchId() {
@@ -66,47 +122,53 @@ class ViewApplicants extends Component {
         return id;
     }
 
-    fetchRequest(id) {
-        return axios.get(`http://localhost:5000/exam/${id}`);
+    async requestMatched(id) {
+        const request = await axios.get(`http://localhost:5000/exam/${id}`);
+        return request.data.req[0].matched;
     }
 
-    async fetchProfile(id) {
-        return axios.get(`http://localhost:5000/app/${id}`);
-    }
+    async fetchRequest(id) {
+        const applicants = await axios.get(`http://localhost:5000/exam/${id}`);
+        const applicantsId = applicants.data.req[0].applicants;
+        const profiles = await axios.get(`http://localhost:5000/app/`);
 
-    generateProfileList() {
         let profileList = [];
-        const applicantList = this.state.applicantList;
 
-        applicantList.forEach(async (id) => {
-            const fetchProfile = await this.fetchProfile(id);
-            const profile = fetchProfile.data.user[0];
-            const details = {
-                id: profile._id,
-                name: profile.name,
-                university: profile.university,
-                degree: profile.degree,
-            };
+        applicantsId.forEach((applicantId) => {
+            const profile = profiles.data.find((profile) => profile._id === applicantId);
+            if (profile) {
+                const details = {
+                    id: profile._id,
+                    name: profile.name,
+                    university: profile.university,
+                    degree: profile.degree,
+                };
 
-            profileList.push(details);
+                profileList.push(details);
+            }
         });
-
         return profileList;
     }
 
+    async fetchAccepted(id) {
+        const request = await axios.get(`http://localhost:5000/exam/${id}`);
+        const acceptedApplicantId = request.data.req[0].acceptedApplicant;
+        const profiles = await axios.get(`http://localhost:5000/app/`);
+        const profile = profiles.data.find((profile) => profile._id === acceptedApplicantId);
+        return profile;
+    }
+
     render() {
-        console.log(this.state.profileList);
         return (
             <div className="wrapper">
                 <div className="to-top">
                     <a href="#top">Top of page</a>
                 </div>
                 <main className="data">
-                    <h1 className="applicant-header">Applicants</h1>
+                    <h1 className="applicant-header">{this.state.matched ? "Accepted applicant" : "Applicants"}</h1>
 
                     <div className="applicant-list">
-                        <ShowApplicants profileList={this.state.profileList} />
-                        <p>{this.state.profileList}</p>
+                        {this.state.matched ? <ShowAcceptedApplicant profile={this.state.acceptedApplicant} /> : <ShowApplicants profileList={this.state.profileList} />}
                     </div>
                 </main>
             </div>
@@ -115,3 +177,5 @@ class ViewApplicants extends Component {
 }
 
 export default ViewApplicants;
+
+//
