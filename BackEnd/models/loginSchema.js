@@ -18,8 +18,7 @@ const loginSchema = new mongoose.Schema({
         required: true,
     },
     degree: {
-        type: String,
-        required: true,
+        type: String
     },
     phonenr: {
         type: Number,
