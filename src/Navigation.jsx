@@ -41,8 +41,8 @@ class Navigation extends Component {
                     </a>
                 </div>
                 <div>
-                    <a href="/" className="link">
-                        <img src={LogoutIcon} onClick={ ()=>logout() } alt="Log out" />
+                    <a onClick={ ()=>logout() }  href="/"  className="link">
+                        <img src={LogoutIcon}  alt="Log out" />
                         Log out
                     </a>
                 </div>

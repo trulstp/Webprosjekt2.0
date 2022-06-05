@@ -19,9 +19,7 @@ class LogIn extends Component {
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        if(sessionStorage.getItem("verified") === true){
-            window.location.assign("/all");
-        }
+        
     }
 
     
@@ -49,7 +47,7 @@ class LogIn extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-
+        
         const login = {
             email: this.state.email,
             password: this.state.password,
@@ -58,12 +56,12 @@ class LogIn extends Component {
         axios.post("http://localhost:5000/app/login", login).then((res) => {
             let token = res.data;
             let decodedToken = jwt_decode(token);
-            console.log(decodedToken.role);
             sessionStorage.setItem("role", decodedToken.role);
             sessionStorage.setItem("verified", decodedToken.verified);
             sessionStorage.setItem("id", decodedToken.id);
-            sessionStorage.setItem("name", decodedToken.name);
+            sessionStorage.setItem("name", decodedToken.name); 
         })
+            
 
         
         
@@ -72,14 +70,15 @@ class LogIn extends Component {
             email: "",
             password: "",
         });
-       
-        this.state.redirect && <Navigate to='/all' replace={true} />
-
         
-
-        if(sessionStorage.getItem("verified") === true){
-            
-        }
+        function delay(time) {
+            return new Promise(resolve => setTimeout(resolve, time));
+          }
+          delay(1000).then(() => {if(sessionStorage.getItem("verified") === "true"){
+            window.location.assign("/all");
+        }});  
+        
+        
     }
 
     checkNumber(type) {
