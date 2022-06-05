@@ -28,9 +28,7 @@ const NavigationRoutes = () => {
         <Router>
             <Routes>
                 <Route path="/signup" element={<SignUp />} />
-
                 <Route path="/" element={<LogIn />} exact />
-
                 <Route path="*" element={<NotFound />} /> 
                 <Route element={<ProtectedRoutes/>} >
                 <Route element={<SidebarLayout />}>
