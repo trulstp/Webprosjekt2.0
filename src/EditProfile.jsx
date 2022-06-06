@@ -103,8 +103,8 @@ class EditProfile extends Component {
                 password: this.state.password,
                 description: this.state.description,
             };
-
-            axios.patch(`http://localhost:5000/app/${this.fetchId()}`, request).then((response) => console.log(response.data));
+            console.log("this is with pass")
+            axios.patch(`http://localhost:5000/app/pass/${this.fetchId()}`, request).then((response) => console.log(response.data));
         } else {
             const requestWithoutPassword = {
                 name: this.state.name,
@@ -114,7 +114,7 @@ class EditProfile extends Component {
                 degree: this.state.degree,
                 description: this.state.description,
             };
-
+            console.log("this is without pass")
             axios.patch(`http://localhost:5000/app/${this.fetchId()}`, requestWithoutPassword).then((response) => console.log(response.data));
         }
 

@@ -118,7 +118,7 @@ const findUser = async (request, response) => {
     }
 };
 
-const updateUser = async (request, response) => {
+const updateUserWithPass = async (request, response) => {
     try {
         const _id = request.params;
         const updateUser = await loginSchema.findOneAndUpdate(_id, request.body, {
@@ -129,6 +129,18 @@ const updateUser = async (request, response) => {
         .then((data) => {
             response.json(data);
         })
+    } catch (e) {
+        response.status(404).send(e);
+    }
+};
+
+const updateUserWithoutPass = async (request, response) => {
+    try {
+        const _id = request.params;
+        const updateUser = await loginSchema.findOneAndUpdate(_id, request.body, {
+            new: true,
+        });
+        response.send(updateUser);
     } catch (e) {
         response.status(404).send(e);
     }
@@ -161,7 +173,8 @@ module.exports = {
     login,
     getAll,
     findUser,
-    updateUser,
+    updateUserWithPass,
+    updateUserWithoutPass,
     verifyUser,
     getUnverified,
     getVerified,
