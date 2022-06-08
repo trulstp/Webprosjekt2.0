@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom"
 import React, { Component } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -22,7 +21,33 @@ class LogIn extends Component {
         
     }
 
-    
+    async componentDidMount() {
+        const response = await this.fetchRequests();
+        this.setState({ requestList: response.data });
+    }
+
+    fetchRequests() {
+        return axios.get("http://localhost:5000/exam/stat");
+    }
+
+    checkNumber(type) {
+        const requestList = this.state.requestList;
+        let numberOpen = 0;
+        let numberMatched = 0;
+        requestList.forEach((request) => {
+            if (request.open) {
+                numberOpen++;
+            }
+            if (request.matched) {
+                numberMatched++;
+            }
+        });
+        if (type === "open") {
+            return numberOpen;
+        } else if (type === "matched") {
+            return numberMatched;
+        }
+    }
 
     changeEmail(event) {
         this.setState({
@@ -36,14 +61,9 @@ class LogIn extends Component {
         });
     }
 
-    async componentDidMount() {
-        const response = await this.fetchRequests();
-        this.setState({ requestList: response.data });
-    }
+    
 
-    fetchRequests() {
-        return axios.get("http://localhost:5000/exam/stat");
-    }
+    
 
     onSubmit(event) {
         event.preventDefault();
@@ -61,45 +81,19 @@ class LogIn extends Component {
             sessionStorage.setItem("id", decodedToken.id);
             sessionStorage.setItem("name", decodedToken.name); 
         })
-            
-
-        
-        
-
         this.setState({
             email: "",
             password: "",
         });
-        
         function delay(time) {
             return new Promise(resolve => setTimeout(resolve, time));
           }
           delay(1000).then(() => {if(sessionStorage.getItem("verified") === "true"){
             window.location.assign("/all");
-        }});  
-        
-        
+        }});        
     }
 
-    checkNumber(type) {
-        const requestList = this.state.requestList;
-        let numberOpen = 0;
-        let numberMatched = 0;
-        requestList.forEach((request) => {
-            if (request.open) {
-                numberOpen++;
-            }
-            if (request.matched) {
-                numberMatched++;
-            }
-        });
-
-        if (type === "open") {
-            return numberOpen;
-        } else if (type === "matched") {
-            return numberMatched;
-        }
-    }
+    
 
     render() {
         return (
