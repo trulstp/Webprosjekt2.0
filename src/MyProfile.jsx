@@ -144,8 +144,11 @@ class Profile extends Component {
                 <main className="data">
                     <h1>{this.state.name}</h1>
                     <section>
+                        <p>Univeristy: {this.state.university}</p>
+                        <p>Degree: {this.state.degree}</p>
                         <h2>Description</h2>
                         <p>{this.state.description}</p>
+                        <br />
 
                         <a href={this.getLink(sessionStorage.getItem("id"))} className="edit-profile">
                             Edit profile
