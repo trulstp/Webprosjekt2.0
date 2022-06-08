@@ -145,8 +145,8 @@ class EditProfile extends Component {
                         <label htmlFor="edit-university">University</label>
                         <input type="text" id="edit-university" className="updateProfile" onChange={this.changeUniversity} value={this.state.university} required />
 
-                        <label htmlFor="edit-degree">Degree</label>
-                        <input type="text" id="edit-degree" className="updateProfile" onChange={this.changeDegree} value={this.state.degree} required />
+                        <label htmlFor="edit-education">Degree</label>
+                        <input type="text" id="edit-education" className="updateProfile" onChange={this.changeDegree} value={this.state.degree} required />
 
                         <label htmlFor="edit-password">Change password</label>
                         <input type="password" id="edit-password" minLength="6" maxLength="20" className="updateProfile" onChange={this.changePassword} value={this.state.password} />
