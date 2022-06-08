@@ -103,7 +103,7 @@ class EditProfile extends Component {
                 password: this.state.password,
                 description: this.state.description,
             };
-            console.log("this is with pass")
+            console.log("this is with pass");
             axios.patch(`https://webbackend6.herokuapp.com/app/pass/${this.fetchId()}`, request).then((response) => console.log(response.data));
         } else {
             const requestWithoutPassword = {
@@ -114,7 +114,7 @@ class EditProfile extends Component {
                 degree: this.state.degree,
                 description: this.state.description,
             };
-            console.log("this is without pass")
+            console.log("this is without pass");
             axios.patch(`https://webbackend6.herokuapp.com/app/${this.fetchId()}`, requestWithoutPassword).then((response) => console.log(response.data));
         }
 
@@ -145,8 +145,8 @@ class EditProfile extends Component {
                         <label htmlFor="edit-university">University</label>
                         <input type="text" id="edit-university" className="updateProfile" onChange={this.changeUniversity} value={this.state.university} required />
 
-                        <label htmlFor="edit-education">Education</label>
-                        <input type="text" id="edit-education" className="updateProfile" onChange={this.changeDegree} value={this.state.degree} required />
+                        <label htmlFor="edit-degree">Degree</label>
+                        <input type="text" id="edit-degree" className="updateProfile" onChange={this.changeDegree} value={this.state.degree} required />
 
                         <label htmlFor="edit-password">Change password</label>
                         <input type="password" id="edit-password" minLength="6" maxLength="20" className="updateProfile" onChange={this.changePassword} value={this.state.password} />

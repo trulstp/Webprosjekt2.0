@@ -11,14 +11,15 @@ class SignUp extends Component {
             email: "",
             phonenr: "",
             university: "",
-            education: "",
+            degree: "",
             password: "",
+            feedback: "",
         };
         this.changeName = this.changeName.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePhone = this.changePhone.bind(this);
         this.changeUniversity = this.changeUniversity.bind(this);
-        this.changeEducation = this.changeEducation.bind(this);
+        this.changeDegree = this.changeDegree.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -47,9 +48,9 @@ class SignUp extends Component {
         });
     }
 
-    changeEducation(event) {
+    changeDegree(event) {
         this.setState({
-            education: event.target.value,
+            degree: event.target.value,
         });
     }
 
@@ -67,7 +68,7 @@ class SignUp extends Component {
             email: this.state.email,
             phonenr: this.state.phonenr,
             university: this.state.university,
-            education: this.state.education,
+            degree: this.state.degree,
             password: this.state.password,
         };
 
@@ -78,8 +79,9 @@ class SignUp extends Component {
             email: "",
             phonenr: "",
             university: "",
-            education: "",
+            degree: "",
             password: "",
+            feedback: "You have signed up, please wait for an administator to accept you.",
         });
     }
 
@@ -101,14 +103,15 @@ class SignUp extends Component {
                     <label htmlFor="input-university">University*</label>
                     <input type="text" id="input-university" onChange={this.changeUniversity} value={this.state.university} required />
 
-                    <label htmlFor="input-education">Title*</label>
-                    <input type="text" id="input-education" onChange={this.changeEducation} value={this.state.education} required />
+                    <label htmlFor="input-degree">Degree*</label>
+                    <input type="text" id="input-degree" onChange={this.changeDegree} value={this.state.degree} required />
 
                     <label htmlFor="input-password">Create password*</label>
                     <input type="password" id="input-password" onChange={this.changePassword} value={this.state.password} minLength="6" maxLength="20" required />
                     <p>
                         <span className="italic">* is required</span>
                     </p>
+                    <p>{this.state.feedback}</p>
                     <div className="signup-buttons">
                         <a href="/">I already have an account...</a>
 

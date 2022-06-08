@@ -15,7 +15,7 @@ const ShowApplicants = ({ profileList }) => {
                                 <a href={getLink(applicant.id)}>{applicant.name}</a>
                             </h2>
                             <p>University: {applicant.university}</p>
-                            <p>Education level: {applicant.degree}</p>
+                            <p>Degree: {applicant.degree}</p>
                         </div>
                         <div className="accept-applicant">
                             <a href={getLink(applicant.id)} className="btn-applicant">
@@ -49,7 +49,7 @@ const ShowAcceptedApplicant = ({ profile }) => {
                         <a href={getLink(profile._id)}>{profile.name}</a>
                     </h2>
                     <p>University: {profile.university}</p>
-                    <p>Education level: {profile.degree}</p>
+                    <p>Degree: {profile.degree}</p>
                 </div>
                 <div className="accept-applicant">
                     <a href={getLink(profile._id)} className="btn-applicant">

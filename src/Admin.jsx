@@ -14,7 +14,7 @@ const AddUsers = ({ newUsers }) => {
                         <h2>{user.name}</h2>
                         <p>Email: {user.email}</p>
                         <p>University: {user.university}</p>
-                        <p>Title: {user.degree}</p>
+                        <p>Degree: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
                         <button className="btn-admin" onClick={(event) => acceptUser(user._id, event.target)}>
@@ -39,7 +39,7 @@ const ManageUsers = ({ addedUsers }) => {
                         <h2>{user.name}</h2>
                         <p>Email: {user.email}</p>
                         <p>University: {user.university}</p>
-                        <p>Title: {user.degree}</p>
+                        <p>Degree: {user.degree}</p>
                     </div>
                     <div className="btn-admin-wrapper">
                         <a href={getLink(user._id)} className="btn-admin">
