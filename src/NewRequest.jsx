@@ -98,7 +98,7 @@ class NewRequest extends Component {
             description: this.state.description,
         };
 
-        axios.post("http://localhost:5000/exam/", request).then((response) => console.log(response.data));
+        axios.post("https://webbackend6.herokuapp.com/exam/", request).then((response) => console.log(response.data));
 
         this.setState({
             title: "",

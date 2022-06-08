@@ -120,15 +120,15 @@ class Profile extends Component {
     }
 
     fetchProfile(id) {
-        return axios.get(`http://localhost:5000/app/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/app/${id}`);
     }
 
     fetchRequests(id) {
-        return axios.get(`http://localhost:5000/exam/author/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/exam/author/${id}`);
     }
 
     fetchHistory(id) {
-        return axios.get(`http://localhost:5000/exam/history/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/exam/history/${id}`);
     }
 
     getLink(id) {

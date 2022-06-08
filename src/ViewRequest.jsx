@@ -42,7 +42,7 @@ class ViewRequest extends Component {
     }
 
     fetchRequest(id) {
-        return axios.get(`http://localhost:5000/exam/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/exam/${id}`);
     }
 
     fetchId() {
@@ -85,7 +85,7 @@ class ViewRequest extends Component {
                 applicants: applicants,
             };
 
-            axios.patch(`http://localhost:5000/exam/${requestId}`, updatedApplicantList);
+            axios.patch(`https://webbackend6.herokuapp.com/exam/${requestId}`, updatedApplicantList);
 
             this.setState({
                 appFeedback: "You have applied.",

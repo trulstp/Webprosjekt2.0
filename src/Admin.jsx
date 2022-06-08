@@ -63,7 +63,7 @@ const acceptUser = (id, btn) => {
     const accept = {
         verified: true,
     };
-    axios.patch(`http://localhost:5000/app/${id}`, accept);
+    axios.patch(`https://webbackend6.herokuapp.com/app/${id}`, accept);
 
     btn.disabled = true;
     btn.innerHTML = "Accepted";
@@ -71,7 +71,7 @@ const acceptUser = (id, btn) => {
 };
 
 const deleteUser = (id, btn) => {
-    axios.delete(`http://localhost:5000/app/${id}`).then((response) => console.log(response.data));
+    axios.delete(`https://webbackend6.herokuapp.com/app/${id}`).then((response) => console.log(response.data));
 
     btn.disabled = true;
     btn.innerHTML = "Deleted";
@@ -98,11 +98,11 @@ class Admin extends Component {
     }
 
     fetchNewUsers() {
-        return axios.get("http://localhost:5000/app/unverified");
+        return axios.get("https://webbackend6.herokuapp.com/app/unverified");
     }
 
     fetchUsers() {
-        return axios.get("http://localhost:5000/app/verified");
+        return axios.get("https://webbackend6.herokuapp.com/app/verified");
     }
 
     render() {

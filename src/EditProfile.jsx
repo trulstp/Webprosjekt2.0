@@ -79,7 +79,7 @@ class EditProfile extends Component {
     }
 
     fetchRequest(id) {
-        return axios.get(`http://localhost:5000/app/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/app/${id}`);
     }
 
     fetchId() {
@@ -104,7 +104,7 @@ class EditProfile extends Component {
                 description: this.state.description,
             };
             console.log("this is with pass")
-            axios.patch(`http://localhost:5000/app/pass/${this.fetchId()}`, request).then((response) => console.log(response.data));
+            axios.patch(`https://webbackend6.herokuapp.com/app/pass/${this.fetchId()}`, request).then((response) => console.log(response.data));
         } else {
             const requestWithoutPassword = {
                 name: this.state.name,
@@ -115,7 +115,7 @@ class EditProfile extends Component {
                 description: this.state.description,
             };
             console.log("this is without pass")
-            axios.patch(`http://localhost:5000/app/${this.fetchId()}`, requestWithoutPassword).then((response) => console.log(response.data));
+            axios.patch(`https://webbackend6.herokuapp.com/app/${this.fetchId()}`, requestWithoutPassword).then((response) => console.log(response.data));
         }
 
         this.setState({

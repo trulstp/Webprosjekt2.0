@@ -82,7 +82,7 @@ class AllRequests extends Component {
     }
 
     async fetchRequests() {
-        const allRequests = await axios.get("http://localhost:5000/exam/");
+        const allRequests = await axios.get("https://webbackend6.herokuapp.com/exam/");
         const openRequests = allRequests.data.filter((request) => {
             return request.open && this.hasHappened(request.deadline);
         });

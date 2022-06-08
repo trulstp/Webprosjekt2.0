@@ -27,7 +27,7 @@ class LogIn extends Component {
     }
 
     fetchRequests() {
-        return axios.get("http://localhost:5000/exam/stat");
+        return axios.get("https://webbackend6.herokuapp.com/exam/stat");
     }
 
     checkNumber(type) {
@@ -73,7 +73,7 @@ class LogIn extends Component {
             password: this.state.password,
         };
 
-        axios.post("http://localhost:5000/app/login", login).then((res) => {
+        axios.post("https://webbackend6.herokuapp.com/app/login", login).then((res) => {
             let token = res.data;
             let decodedToken = jwt_decode(token);
             sessionStorage.setItem("role", decodedToken.role);

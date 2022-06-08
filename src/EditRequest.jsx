@@ -99,7 +99,7 @@ class EditRequest extends Component {
     }
 
     fetchRequest(id) {
-        return axios.get(`http://localhost:5000/exam/${id}`);
+        return axios.get(`https://webbackend6.herokuapp.com/exam/${id}`);
     }
 
     fetchId() {
@@ -123,7 +123,7 @@ class EditRequest extends Component {
             description: this.state.description,
         };
 
-        axios.patch(`http://localhost:5000/exam/${this.fetchId()}`, request).then((response) => console.log(response.data));
+        axios.patch(`https://webbackend6.herokuapp.com/exam/${this.fetchId()}`, request).then((response) => console.log(response.data));
 
         this.setState({
             feedback: "Request has been updated",
