@@ -71,7 +71,7 @@ class SignUp extends Component {
             password: this.state.password,
         };
 
-        axios.post("http://localhost:5000/app/register", registered).then((response) => console.log(response.data));
+        axios.post("https://webbackend6.herokuapp.com/app/register", registered).then((response) => console.log(response.data));
 
         this.setState({
             name: "",

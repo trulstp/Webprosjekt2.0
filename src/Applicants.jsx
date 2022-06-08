@@ -73,7 +73,7 @@ const fetchRequestId = () => {
 };
 
 const acceptUser = async (id, btn) => {
-    const request = await axios.get(`http://localhost:5000/exam/${fetchRequestId()}`);
+    const request = await axios.get(`https://webbackend6.herokuapp.com/exam/${fetchRequestId()}`);
     const matched = request.data.req[0].matched;
     if (!matched) {
         const accept = {
@@ -81,7 +81,7 @@ const acceptUser = async (id, btn) => {
             matched: true,
             open: false,
         };
-        axios.patch(`http://localhost:5000/exam/${fetchRequestId()}`, accept);
+        axios.patch(`https://webbackend6.herokuapp.com/exam/${fetchRequestId()}`, accept);
 
         btn.disabled = true;
         btn.innerHTML = "Accepted applicant";
@@ -123,14 +123,14 @@ class ViewApplicants extends Component {
     }
 
     async requestMatched(id) {
-        const request = await axios.get(`http://localhost:5000/exam/${id}`);
+        const request = await axios.get(`https://webbackend6.herokuapp.com/exam/${id}`);
         return request.data.req[0].matched;
     }
 
     async fetchRequest(id) {
-        const applicants = await axios.get(`http://localhost:5000/exam/${id}`);
+        const applicants = await axios.get(`https://webbackend6.herokuapp.com/exam/${id}`);
         const applicantsId = applicants.data.req[0].applicants;
-        const profiles = await axios.get(`http://localhost:5000/app/`);
+        const profiles = await axios.get(`https://webbackend6.herokuapp.com/app/`);
 
         let profileList = [];
 
@@ -151,9 +151,9 @@ class ViewApplicants extends Component {
     }
 
     async fetchAccepted(id) {
-        const request = await axios.get(`http://localhost:5000/exam/${id}`);
+        const request = await axios.get(`https://webbackend6.herokuapp.com/exam/${id}`);
         const acceptedApplicantId = request.data.req[0].acceptedApplicant;
-        const profiles = await axios.get(`http://localhost:5000/app/`);
+        const profiles = await axios.get(`https://webbackend6.herokuapp.com/app/`);
         const profile = profiles.data.find((profile) => profile._id === acceptedApplicantId);
         return profile;
     }
